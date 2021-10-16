@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Models
 {
-    class QuanTri
+    public class QuanTri
     {
     }
 }

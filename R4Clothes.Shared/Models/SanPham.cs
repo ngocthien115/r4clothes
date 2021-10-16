@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Models
 {
-    class SanPham
+    public class SanPham
     {
     }
 }
