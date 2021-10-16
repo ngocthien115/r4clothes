@@ -10,6 +10,8 @@ namespace R4Clothes.Shared.Models
 {
     public class ChiTietHoaDon
     {
+        [Key]
+        public int MaChiTietHoaDon { get; set; }
         [ForeignKey("HoaDon")]
         public int Mahoadon { get; set; }
         [ForeignKey("SanPham")]

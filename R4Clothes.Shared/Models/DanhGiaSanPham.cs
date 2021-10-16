@@ -10,6 +10,9 @@ namespace R4Clothes.Shared.Models
 {
     public class DanhGiaSanPham
     {
+        [Key]
+        public int MaDanhGiaSanPham { get; set; }
+
         [ForeignKey("KhachHang")]
         [Display(Name = "Mã khách hàng")]
         public int Makhachhang { get; set; }
@@ -22,5 +25,8 @@ namespace R4Clothes.Shared.Models
         [StringLength(250)]
         [Display(Name = "Chi tiết")]
         public string Chitiet { get; set; }
+
+        public SanPham SanPham { get; set; }
+        public KhachHang KhachHang { get; set; }
     }
 }

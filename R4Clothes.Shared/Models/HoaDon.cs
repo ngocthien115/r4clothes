@@ -28,7 +28,7 @@ namespace R4Clothes.Shared.Models
         public double Tongtien { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Bạn cần chọn ngày."), Display(Name = "Ngày đặt")]
-        public DateTime Ngaydat { get; set; }      
+        public DateTime Ngaydat { get; set; }
         [Display(Name = "Trạng thái")]
         public Trangthaidonhang Trangthaidonhang { get; set; }
         public KhachHang Khachhang { get; set; }
