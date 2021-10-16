@@ -6,7 +6,21 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Services
 {
-    class DanhGiaSanPhamSvc
+    public interface IDanhGiaSanPham
     {
+        bool AddDanhGiaSanPham(int idsanpham, string danhgia);
+        string XemDanhGiaSanPham(int idsanpham);
+    }
+    class DanhGiaSanPhamSvc : IDanhGiaSanPham
+    {
+        public bool AddDanhGiaSanPham(int idsanpham, string danhgia)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string XemDanhGiaSanPham(int idsanpham)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
