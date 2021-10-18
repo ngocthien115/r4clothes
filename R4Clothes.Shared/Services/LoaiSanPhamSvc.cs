@@ -15,19 +15,48 @@ namespace R4Clothes.Shared.Services
     }
     public class LoaiSanPhamSvc : ILoaiSanPham
     {
+        public DataContext _context;
+        public LoaiSanPhamSvc(DataContext context)
+        {
+            _context = context;
+        }
         public bool AddLoaiSanPham(LoaiSanPham loaiSanPham)
         {
-            throw new NotImplementedException();
+            bool ret;
+            try
+            {
+                loaiSanPham.Maloai = 0;
+                _context.LoaiSanPhams.Add(loaiSanPham);
+                _context.SaveChanges();
+                ret = true;
+            }
+            catch
+            {
+                ret = false;
+            }
+            return ret;
         }
 
         public List<LoaiSanPham> DanhSachLoaiSanPham()
         {
-            throw new NotImplementedException();
+            return _context.LoaiSanPhams.ToList();
         }
 
         public bool XoaLoaiSanPham(int idloaisanpham)
         {
-            throw new NotImplementedException();
+            bool ret;
+            try
+            {
+                var loaiSp = _context.LoaiSanPhams.Find(idloaisanpham);
+                _context.LoaiSanPhams.Remove(loaiSp);
+                _context.SaveChanges();
+                ret = true;
+            }
+            catch
+            {
+                ret = false;
+            }
+            return ret;
         }
     }
 }

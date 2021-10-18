@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4ClothesAPI\\R4ClothesAPI.csproj": {}
+    "C:\\Users\\ACER\\source\\r4clothes\\R4ClothesAPI\\R4ClothesAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4Clothes.Shared\\R4Clothes.Shared.csproj": {
+    "C:\\Users\\ACER\\source\\r4clothes\\R4Clothes.Shared\\R4Clothes.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4Clothes.Shared\\R4Clothes.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\ACER\\source\\r4clothes\\R4Clothes.Shared\\R4Clothes.Shared.csproj",
         "projectName": "R4Clothes.Shared",
-        "projectPath": "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4Clothes.Shared\\R4Clothes.Shared.csproj",
-        "packagesPath": "C:\\Users\\NgocThien\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4Clothes.Shared\\obj\\",
+        "projectPath": "C:\\Users\\ACER\\source\\r4clothes\\R4Clothes.Shared\\R4Clothes.Shared.csproj",
+        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ACER\\source\\r4clothes\\R4Clothes.Shared\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\NgocThien\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -78,21 +82,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4ClothesAPI\\R4ClothesAPI.csproj": {
+    "C:\\Users\\ACER\\source\\r4clothes\\R4ClothesAPI\\R4ClothesAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4ClothesAPI\\R4ClothesAPI.csproj",
+        "projectUniqueName": "C:\\Users\\ACER\\source\\r4clothes\\R4ClothesAPI\\R4ClothesAPI.csproj",
         "projectName": "R4ClothesAPI",
-        "projectPath": "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4ClothesAPI\\R4ClothesAPI.csproj",
-        "packagesPath": "C:\\Users\\NgocThien\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4ClothesAPI\\obj\\",
+        "projectPath": "C:\\Users\\ACER\\source\\r4clothes\\R4ClothesAPI\\R4ClothesAPI.csproj",
+        "packagesPath": "C:\\Users\\ACER\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ACER\\source\\r4clothes\\R4ClothesAPI\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\NgocThien\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ACER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -106,8 +114,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4Clothes.Shared\\R4Clothes.Shared.csproj": {
-                "projectPath": "C:\\Users\\NgocThien\\source\\repos\\R4ClothesAPI\\R4Clothes.Shared\\R4Clothes.Shared.csproj"
+              "C:\\Users\\ACER\\source\\r4clothes\\R4Clothes.Shared\\R4Clothes.Shared.csproj": {
+                "projectPath": "C:\\Users\\ACER\\source\\r4clothes\\R4Clothes.Shared\\R4Clothes.Shared.csproj"
               }
             }
           }
@@ -159,7 +167,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
         }
       }
     }
