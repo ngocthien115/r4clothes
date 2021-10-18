@@ -36,5 +36,7 @@ namespace R4Clothes.Shared.Models
         public string Mota { get; set; }
         [Display(Name = "Trạng thái")]
         public bool Trangthai { get; set; }
+        public LoaiSanPham LoaiSanPham { get; set; }
+        public List<DanhGiaSanPham> DanhGiaSanPham { get; set; }
     }
 }
