@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Services
 {
-    interface IKhachHang
+    public interface IKhachHang
     {
         KhachHang Login();//WebViewLogin
         bool QuenMatKhau(int idkhachhang, string oldpwd, string newpwd);

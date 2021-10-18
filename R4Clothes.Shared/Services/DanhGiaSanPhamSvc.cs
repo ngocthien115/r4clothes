@@ -11,7 +11,7 @@ namespace R4Clothes.Shared.Services
         bool AddDanhGiaSanPham(int idsanpham, string danhgia);
         string XemDanhGiaSanPham(int idsanpham);
     }
-    class DanhGiaSanPhamSvc : IDanhGiaSanPham
+    public class DanhGiaSanPhamSvc : IDanhGiaSanPham
     {
         public bool AddDanhGiaSanPham(int idsanpham, string danhgia)
         {

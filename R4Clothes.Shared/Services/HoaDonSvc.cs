@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Services
 {
-    interface IHoaDon
+    public interface IHoaDon
     {
         bool AddHoaDon(HoaDon hoadon);
         List<HoaDon> DanhSachHoaDonTheoKhachHang(int idnguoidung);

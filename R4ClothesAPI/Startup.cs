@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using R4Clothes.Shared.Models;
+using R4Clothes.Shared.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,13 @@ namespace R4ClothesAPI
                 , b => b.MigrationsAssembly("R4ClothesAPI")));
 
             services.AddControllers();
+            services.AddTransient<ISanPham, SanPhamSvc>();
+            services.AddTransient<IHoaDon, HoaDonSvc>();
+            services.AddTransient<IChiTietHoaDon, ChiTietHoaDonSvc>();
+            services.AddTransient<IQuanTri, QuanTriSvc>();
+            services.AddTransient<IKhachHang, KhachHangSvc>();
+            services.AddTransient<ILoaiSanPham, LoaiSanPhamSvc>();
+            services.AddTransient<IDanhGiaSanPham, DanhGiaSanPhamSvc>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "R4ClothesAPI", Version = "v1" });

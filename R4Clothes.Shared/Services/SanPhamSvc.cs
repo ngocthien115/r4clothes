@@ -1,7 +1,6 @@
 ﻿using R4Clothes.Shared.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +13,7 @@ namespace R4Clothes.Shared.Services
     {
         List<SanPham> DanhSachSanPhamAdmin();
         List<SanPham> DanhSachSanPham();
-        SanPham AddSanPham(SanPham sanPham);
+        Task<SanPham> AddSanPham(SanPham sanPham);
         bool SuaSanPham(int id, SanPham sanPham);
         bool XoaSanPham(int id);
         bool ThongKe();
@@ -31,13 +30,13 @@ namespace R4Clothes.Shared.Services
                 _context.SanPhams.Add(sanPham);
                 await _context.SaveChangesAsync();
                 transaction.Commit();
+                return sanPham;
             }
             catch (Exception)
             {
                 transaction.Rollback();
-                throw;
+                return sanPham = null;
             }
-
         }
 
         public List<SanPham> DanhSachSanPham()

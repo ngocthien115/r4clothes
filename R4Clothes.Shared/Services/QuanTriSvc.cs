@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Services
 {
-    interface IQuanTri
+    public interface IQuanTri
     {
         bool Login();
         List<QuanTri> DanhSachQuanTri();
         bool XoaNguoiQuanTri(int idnguoiquantri);
     }
-    class QuanTriSvc : IQuanTri
+    public class QuanTriSvc : IQuanTri
     {
         public List<QuanTri> DanhSachQuanTri()
         {
