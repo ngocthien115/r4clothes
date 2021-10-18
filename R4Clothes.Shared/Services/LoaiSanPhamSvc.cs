@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Services
 {
-    interface ILoaiSanPham
+    public interface ILoaiSanPham
     {
         bool AddLoaiSanPham(LoaiSanPham loaiSanPham);
         List<LoaiSanPham> DanhSachLoaiSanPham();
