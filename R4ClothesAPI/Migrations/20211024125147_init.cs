@@ -15,6 +15,8 @@ namespace R4ClothesAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Tenkhachhang = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     Email = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    NgaySinh = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Gioitinh = table.Column<int>(type: "int", nullable: false),
                     Diachi = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Sodienthoai = table.Column<string>(type: "varchar(15)", maxLength: 15, nullable: false),
                     Hinh = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -60,21 +62,29 @@ namespace R4ClothesAPI.Migrations
                 {
                     Mahoadon = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Maquantri = table.Column<int>(type: "int", nullable: false),
                     Makhachhang = table.Column<int>(type: "int", nullable: false),
                     Tongtien = table.Column<double>(type: "float", nullable: false),
+                    Email = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Diachi = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Ngaydat = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Trangthaidonhang = table.Column<int>(type: "int", nullable: false),
-                    KhachhangMakhachhang = table.Column<int>(type: "int", nullable: true)
+                    TrangthaiHD = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HoaDons", x => x.Mahoadon);
                     table.ForeignKey(
-                        name: "FK_HoaDons_KhachHangs_KhachhangMakhachhang",
-                        column: x => x.KhachhangMakhachhang,
+                        name: "FK_HoaDons_KhachHangs_Makhachhang",
+                        column: x => x.Makhachhang,
                         principalTable: "KhachHangs",
                         principalColumn: "Makhachhang",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HoaDons_QuanTris_Maquantri",
+                        column: x => x.Maquantri,
+                        principalTable: "QuanTris",
+                        principalColumn: "Maquantri",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -84,12 +94,17 @@ namespace R4ClothesAPI.Migrations
                     Masanpham = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Tensanpham = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Maquantri = table.Column<int>(type: "int", nullable: false),
                     Maloai = table.Column<int>(type: "int", nullable: false),
                     Soluong = table.Column<int>(type: "int", nullable: false),
                     Gia = table.Column<double>(type: "float", nullable: false),
                     Hinh = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Soluotxem = table.Column<int>(type: "int", nullable: false),
+                    Dacbiet = table.Column<int>(type: "int", nullable: false),
+                    Ngaynhap = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Giamgia = table.Column<double>(type: "float", nullable: false),
                     Mota = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: true),
-                    Trangthai = table.Column<bool>(type: "bit", nullable: false)
+                    TrangthaiSP = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,6 +114,12 @@ namespace R4ClothesAPI.Migrations
                         column: x => x.Maloai,
                         principalTable: "LoaiSanPhams",
                         principalColumn: "Maloai",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SanPhams_QuanTris_Maquantri",
+                        column: x => x.Maquantri,
+                        principalTable: "QuanTris",
+                        principalColumn: "Maquantri",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -112,32 +133,30 @@ namespace R4ClothesAPI.Migrations
                     Masanpham = table.Column<int>(type: "int", nullable: false),
                     Tensanpham = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Soluong = table.Column<int>(type: "int", nullable: false),
-                    Thanhtien = table.Column<double>(type: "float", nullable: false),
-                    HoadonMahoadon = table.Column<int>(type: "int", nullable: true),
-                    SanphamMasanpham = table.Column<int>(type: "int", nullable: true)
+                    Gia = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ChiTietHoaDons", x => x.MaChiTietHoaDon);
                     table.ForeignKey(
-                        name: "FK_ChiTietHoaDons_HoaDons_HoadonMahoadon",
-                        column: x => x.HoadonMahoadon,
+                        name: "FK_ChiTietHoaDons_HoaDons_Mahoadon",
+                        column: x => x.Mahoadon,
                         principalTable: "HoaDons",
                         principalColumn: "Mahoadon",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ChiTietHoaDons_SanPhams_SanphamMasanpham",
-                        column: x => x.SanphamMasanpham,
+                        name: "FK_ChiTietHoaDons_SanPhams_Masanpham",
+                        column: x => x.Masanpham,
                         principalTable: "SanPhams",
                         principalColumn: "Masanpham",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
                 name: "DanhGiaSanPhams",
                 columns: table => new
                 {
-                    MaDanhGiaSanPham = table.Column<int>(type: "int", nullable: false)
+                    MaDanhGiaSP = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Makhachhang = table.Column<int>(type: "int", nullable: false),
                     Masanpham = table.Column<int>(type: "int", nullable: false),
@@ -146,7 +165,7 @@ namespace R4ClothesAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DanhGiaSanPhams", x => x.MaDanhGiaSanPham);
+                    table.PrimaryKey("PK_DanhGiaSanPhams", x => x.MaDanhGiaSP);
                     table.ForeignKey(
                         name: "FK_DanhGiaSanPhams_KhachHangs_Makhachhang",
                         column: x => x.Makhachhang,
@@ -161,15 +180,44 @@ namespace R4ClothesAPI.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_ChiTietHoaDons_HoadonMahoadon",
-                table: "ChiTietHoaDons",
-                column: "HoadonMahoadon");
+            migrationBuilder.CreateTable(
+                name: "Shares",
+                columns: table => new
+                {
+                    Mashare = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Makhachhang = table.Column<int>(type: "int", nullable: false),
+                    Masanpham = table.Column<int>(type: "int", nullable: false),
+                    Hoten = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Email = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    Thoigian = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shares", x => x.Mashare);
+                    table.ForeignKey(
+                        name: "FK_Shares_KhachHangs_Makhachhang",
+                        column: x => x.Makhachhang,
+                        principalTable: "KhachHangs",
+                        principalColumn: "Makhachhang",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Shares_SanPhams_Masanpham",
+                        column: x => x.Masanpham,
+                        principalTable: "SanPhams",
+                        principalColumn: "Masanpham",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ChiTietHoaDons_SanphamMasanpham",
+                name: "IX_ChiTietHoaDons_Mahoadon",
                 table: "ChiTietHoaDons",
-                column: "SanphamMasanpham");
+                column: "Mahoadon");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChiTietHoaDons_Masanpham",
+                table: "ChiTietHoaDons",
+                column: "Masanpham");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DanhGiaSanPhams_Makhachhang",
@@ -182,14 +230,34 @@ namespace R4ClothesAPI.Migrations
                 column: "Masanpham");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HoaDons_KhachhangMakhachhang",
+                name: "IX_HoaDons_Makhachhang",
                 table: "HoaDons",
-                column: "KhachhangMakhachhang");
+                column: "Makhachhang");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HoaDons_Maquantri",
+                table: "HoaDons",
+                column: "Maquantri");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SanPhams_Maloai",
                 table: "SanPhams",
                 column: "Maloai");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SanPhams_Maquantri",
+                table: "SanPhams",
+                column: "Maquantri");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shares_Makhachhang",
+                table: "Shares",
+                column: "Makhachhang");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Shares_Masanpham",
+                table: "Shares",
+                column: "Masanpham");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -201,7 +269,7 @@ namespace R4ClothesAPI.Migrations
                 name: "DanhGiaSanPhams");
 
             migrationBuilder.DropTable(
-                name: "QuanTris");
+                name: "Shares");
 
             migrationBuilder.DropTable(
                 name: "HoaDons");
@@ -214,6 +282,9 @@ namespace R4ClothesAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "LoaiSanPhams");
+
+            migrationBuilder.DropTable(
+                name: "QuanTris");
         }
     }
 }

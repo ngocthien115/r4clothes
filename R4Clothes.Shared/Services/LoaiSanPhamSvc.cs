@@ -25,7 +25,7 @@ namespace R4Clothes.Shared.Services
             bool ret;
             try
             {
-                loaiSanPham.Maloai = 0;
+                //loaiSanPham.Maloai = 0;
                 _context.LoaiSanPhams.Add(loaiSanPham);
                 _context.SaveChanges();
                 ret = true;

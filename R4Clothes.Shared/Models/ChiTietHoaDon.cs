@@ -17,16 +17,13 @@ namespace R4Clothes.Shared.Models
         [ForeignKey("SanPham")]
         public int Masanpham { get; set; }
         [StringLength(250)]
-        [Required(ErrorMessage = "Bạn cần nhập tên.")]
-        [Display(Name = "Tên sản phẩm")]
+        [Required]
         public string Tensanpham { get; set; }
-        [Required, Range(0, int.MaxValue, ErrorMessage = "Bạn cần nhập số lượng.")]
-        [Display(Name = "Số lượng")]
+        [Required]
         public int Soluong { get; set; }
-        [Required, Range(0, double.MaxValue, ErrorMessage = "Bạn cần nhập thành tiền.")]
-        [Display(Name = "Thành tiền")]
-        public double Thanhtien { get; set; }
-        public HoaDon Hoadon { get; set; }
-        public SanPham Sanpham { get; set; }
+        [Required]
+        public double Gia { get; set; }
+        public HoaDon HoaDon { get; set; }
+        public SanPham SanPham { get; set; }
     }
 }

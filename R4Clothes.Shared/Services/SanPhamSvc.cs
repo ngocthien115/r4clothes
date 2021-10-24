@@ -41,9 +41,10 @@ namespace R4Clothes.Shared.Services
 
         public List<SanPham> DanhSachSanPham()
         {
-            List<SanPham> list = new List<SanPham>();
-            list = _context.SanPhams.Where(t => t.Trangthai == true).ToList();
-            return list;
+            throw new NotImplementedException();
+            //List<SanPham> list = new List<SanPham>();
+            //list = _context.SanPhams.Where(t => t.Trangthai == true).ToList();
+            //return list;
         }
 
         public List<SanPham> DanhSachSanPhamAdmin()

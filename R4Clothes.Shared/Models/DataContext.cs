@@ -13,7 +13,7 @@ namespace R4Clothes.Shared.Models
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
         }
-
+        public DbSet<ChiaSe> ChiaSes { get; set; }
         public DbSet<SanPham> SanPhams { get; set; }
         public DbSet<QuanTri> QuanTris { get; set; }
         public DbSet<HoaDon> HoaDons { get; set; }

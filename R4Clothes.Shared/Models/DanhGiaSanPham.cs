@@ -11,21 +11,15 @@ namespace R4Clothes.Shared.Models
     public class DanhGiaSanPham
     {
         [Key]
-        public int MaDanhGiaSanPham { get; set; }
-
-        [ForeignKey("KhachHang")]
-        [Display(Name = "Mã khách hàng")]
+        public int MaDanhGiaSP { get; set; }
+        [Display(Name = "Mã khách hàng"), ForeignKey("KhachHang")]
         public int Makhachhang { get; set; }
-        [ForeignKey("SanPham")]
-        [Display(Name = "Mã sản phẩm")]      
+        [Display(Name = "Mã sản phẩm"), ForeignKey("SanPham")]      
         public int Masanpham { get; set; }
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        [Required(ErrorMessage = "Bạn cần chọn ngày."), Display(Name = "Ngày đặt")]
+        [Display(Name = "Ngày đánh giá"), Required(ErrorMessage = "Bạn cần chọn ngày."), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Thoigian { get; set; }
-        [StringLength(250)]
-        [Display(Name = "Chi tiết")]
+        [Display(Name = "Chi tiết"), StringLength(250)]
         public string Chitiet { get; set; }
-
         public SanPham SanPham { get; set; }
         public KhachHang KhachHang { get; set; }
     }

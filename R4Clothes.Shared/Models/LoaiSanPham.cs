@@ -11,10 +11,8 @@ namespace R4Clothes.Shared.Models
     {
         [Key]
         public int Maloai { get; set; }
-
-        [StringLength(250)]
-        [Required(ErrorMessage = "Bạn cần nhập tên.")]
-        [Display(Name = "Tên loại")]
+        [Display(Name = "Tên loại"), Required(ErrorMessage = "Bạn cần nhập tên."), StringLength(250)]
         public string Tenloai { get; set; }
+        public List<SanPham> SanPhams { get; set; }
     }
 }

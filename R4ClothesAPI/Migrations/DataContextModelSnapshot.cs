@@ -27,16 +27,13 @@ namespace R4ClothesAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("HoadonMahoadon")
-                        .HasColumnType("int");
+                    b.Property<double>("Gia")
+                        .HasColumnType("float");
 
                     b.Property<int>("Mahoadon")
                         .HasColumnType("int");
 
                     b.Property<int>("Masanpham")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SanphamMasanpham")
                         .HasColumnType("int");
 
                     b.Property<int>("Soluong")
@@ -47,21 +44,52 @@ namespace R4ClothesAPI.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<double>("Thanhtien")
-                        .HasColumnType("float");
-
                     b.HasKey("MaChiTietHoaDon");
 
-                    b.HasIndex("HoadonMahoadon");
+                    b.HasIndex("Mahoadon");
 
-                    b.HasIndex("SanphamMasanpham");
+                    b.HasIndex("Masanpham");
 
                     b.ToTable("ChiTietHoaDons");
                 });
 
+            modelBuilder.Entity("R4Clothes.Shared.Models.ChiaSe", b =>
+                {
+                    b.Property<int>("Mashare")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Hoten")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("Makhachhang")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Masanpham")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Thoigian")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Mashare");
+
+                    b.HasIndex("Makhachhang");
+
+                    b.HasIndex("Masanpham");
+
+                    b.ToTable("Shares");
+                });
+
             modelBuilder.Entity("R4Clothes.Shared.Models.DanhGiaSanPham", b =>
                 {
-                    b.Property<int>("MaDanhGiaSanPham")
+                    b.Property<int>("MaDanhGiaSP")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -79,7 +107,7 @@ namespace R4ClothesAPI.Migrations
                     b.Property<DateTime>("Thoigian")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("MaDanhGiaSanPham");
+                    b.HasKey("MaDanhGiaSP");
 
                     b.HasIndex("Makhachhang");
 
@@ -95,10 +123,20 @@ namespace R4ClothesAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("KhachhangMakhachhang")
-                        .HasColumnType("int");
+                    b.Property<string>("Diachi")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<int>("Makhachhang")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Maquantri")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Ngaydat")
@@ -107,12 +145,14 @@ namespace R4ClothesAPI.Migrations
                     b.Property<double>("Tongtien")
                         .HasColumnType("float");
 
-                    b.Property<int>("Trangthaidonhang")
+                    b.Property<int>("TrangthaiHD")
                         .HasColumnType("int");
 
                     b.HasKey("Mahoadon");
 
-                    b.HasIndex("KhachhangMakhachhang");
+                    b.HasIndex("Makhachhang");
+
+                    b.HasIndex("Maquantri");
 
                     b.ToTable("HoaDons");
                 });
@@ -134,6 +174,9 @@ namespace R4ClothesAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<int>("Gioitinh")
+                        .HasColumnType("int");
+
                     b.Property<string>("Hinh")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -141,6 +184,10 @@ namespace R4ClothesAPI.Migrations
                     b.Property<string>("Matkhau")
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime?>("NgaySinh")
+                        .IsRequired()
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Sodienthoai")
                         .IsRequired()
@@ -208,7 +255,13 @@ namespace R4ClothesAPI.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Dacbiet")
+                        .HasColumnType("int");
+
                     b.Property<double>("Gia")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Giamgia")
                         .HasColumnType("float");
 
                     b.Property<string>("Hinh")
@@ -218,11 +271,20 @@ namespace R4ClothesAPI.Migrations
                     b.Property<int>("Maloai")
                         .HasColumnType("int");
 
+                    b.Property<int>("Maquantri")
+                        .HasColumnType("int");
+
                     b.Property<string>("Mota")
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<DateTime>("Ngaynhap")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Soluong")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Soluotxem")
                         .HasColumnType("int");
 
                     b.Property<string>("Tensanpham")
@@ -230,41 +292,66 @@ namespace R4ClothesAPI.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<bool>("Trangthai")
-                        .HasColumnType("bit");
+                    b.Property<int>("TrangthaiSP")
+                        .HasColumnType("int");
 
                     b.HasKey("Masanpham");
 
                     b.HasIndex("Maloai");
+
+                    b.HasIndex("Maquantri");
 
                     b.ToTable("SanPhams");
                 });
 
             modelBuilder.Entity("R4Clothes.Shared.Models.ChiTietHoaDon", b =>
                 {
-                    b.HasOne("R4Clothes.Shared.Models.HoaDon", "Hoadon")
-                        .WithMany("Chitiethoadons")
-                        .HasForeignKey("HoadonMahoadon");
+                    b.HasOne("R4Clothes.Shared.Models.HoaDon", "HoaDon")
+                        .WithMany("ChiTietHoaDons")
+                        .HasForeignKey("Mahoadon")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("R4Clothes.Shared.Models.SanPham", "Sanpham")
+                    b.HasOne("R4Clothes.Shared.Models.SanPham", "SanPham")
                         .WithMany()
-                        .HasForeignKey("SanphamMasanpham");
+                        .HasForeignKey("Masanpham")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Hoadon");
+                    b.Navigation("HoaDon");
 
-                    b.Navigation("Sanpham");
+                    b.Navigation("SanPham");
                 });
 
-            modelBuilder.Entity("R4Clothes.Shared.Models.DanhGiaSanPham", b =>
+            modelBuilder.Entity("R4Clothes.Shared.Models.ChiaSe", b =>
                 {
                     b.HasOne("R4Clothes.Shared.Models.KhachHang", "KhachHang")
-                        .WithMany()
+                        .WithMany("ChiaSes")
                         .HasForeignKey("Makhachhang")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("R4Clothes.Shared.Models.SanPham", "SanPham")
-                        .WithMany("DanhGiaSanPham")
+                        .WithMany()
+                        .HasForeignKey("Masanpham")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KhachHang");
+
+                    b.Navigation("SanPham");
+                });
+
+            modelBuilder.Entity("R4Clothes.Shared.Models.DanhGiaSanPham", b =>
+                {
+                    b.HasOne("R4Clothes.Shared.Models.KhachHang", "KhachHang")
+                        .WithMany("DanhGiaSanPhams")
+                        .HasForeignKey("Makhachhang")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("R4Clothes.Shared.Models.SanPham", "SanPham")
+                        .WithMany()
                         .HasForeignKey("Masanpham")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -276,32 +363,66 @@ namespace R4ClothesAPI.Migrations
 
             modelBuilder.Entity("R4Clothes.Shared.Models.HoaDon", b =>
                 {
-                    b.HasOne("R4Clothes.Shared.Models.KhachHang", "Khachhang")
-                        .WithMany()
-                        .HasForeignKey("KhachhangMakhachhang");
+                    b.HasOne("R4Clothes.Shared.Models.KhachHang", "KhachHang")
+                        .WithMany("HoaDon")
+                        .HasForeignKey("Makhachhang")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Khachhang");
+                    b.HasOne("R4Clothes.Shared.Models.QuanTri", "QuanTri")
+                        .WithMany("HoaDons")
+                        .HasForeignKey("Maquantri")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KhachHang");
+
+                    b.Navigation("QuanTri");
                 });
 
             modelBuilder.Entity("R4Clothes.Shared.Models.SanPham", b =>
                 {
                     b.HasOne("R4Clothes.Shared.Models.LoaiSanPham", "LoaiSanPham")
-                        .WithMany()
+                        .WithMany("SanPhams")
                         .HasForeignKey("Maloai")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("R4Clothes.Shared.Models.QuanTri", "QuanTri")
+                        .WithMany("SanPhams")
+                        .HasForeignKey("Maquantri")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("LoaiSanPham");
+
+                    b.Navigation("QuanTri");
                 });
 
             modelBuilder.Entity("R4Clothes.Shared.Models.HoaDon", b =>
                 {
-                    b.Navigation("Chitiethoadons");
+                    b.Navigation("ChiTietHoaDons");
                 });
 
-            modelBuilder.Entity("R4Clothes.Shared.Models.SanPham", b =>
+            modelBuilder.Entity("R4Clothes.Shared.Models.KhachHang", b =>
                 {
-                    b.Navigation("DanhGiaSanPham");
+                    b.Navigation("ChiaSes");
+
+                    b.Navigation("DanhGiaSanPhams");
+
+                    b.Navigation("HoaDon");
+                });
+
+            modelBuilder.Entity("R4Clothes.Shared.Models.LoaiSanPham", b =>
+                {
+                    b.Navigation("SanPhams");
+                });
+
+            modelBuilder.Entity("R4Clothes.Shared.Models.QuanTri", b =>
+                {
+                    b.Navigation("HoaDons");
+
+                    b.Navigation("SanPhams");
                 });
 #pragma warning restore 612, 618
         }
