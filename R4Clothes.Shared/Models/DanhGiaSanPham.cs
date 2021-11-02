@@ -13,18 +13,23 @@ namespace R4Clothes.Shared.Models
         [Key]
         public int MaDanhGiaSanPham { get; set; }
 
-        [ForeignKey("KhachHang")]
         [Display(Name = "Mã khách hàng")]
+        [ForeignKey("KhachHang")]
+        [Required]
         public int Makhachhang { get; set; }
+        
+        [Display(Name = "Mã sản phẩm")]
         [ForeignKey("SanPham")]
-        [Display(Name = "Mã sản phẩm")]      
+        [Required]
         public int Masanpham { get; set; }
+
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Bạn cần chọn ngày."), Display(Name = "Ngày đặt")]
         public DateTime Thoigian { get; set; }
+
         [StringLength(250)]
-        [Display(Name = "Chi tiết")]
-        public string Chitiet { get; set; }
+        [Display(Name = "Nội dung")]
+        public string Noidung { get; set; }
 
         public SanPham SanPham { get; set; }
         public KhachHang KhachHang { get; set; }

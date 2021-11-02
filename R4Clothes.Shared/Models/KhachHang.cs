@@ -13,42 +13,44 @@ namespace R4Clothes.Shared.Models
     {
         [Key]
         public int Makhachhang { get; set; }
+
         [StringLength(150)]
         [Required(ErrorMessage = "Bạn cần nhập họ tên.")]
         [Display(Name = "Họ & Tên")]
         public string Tenkhachhang { get; set; }
+
         [Required(ErrorMessage = "Bạn cần nhập email."), Display(Name = "Email")]
         [Column(TypeName = "varchar(50)"), MaxLength(50)]
         [DataType(DataType.EmailAddress)]
         [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Email không phù hợp.")]
         public string Email { get; set; }
+
         [StringLength(250)]
         [Required(ErrorMessage = "Bạn cần địa chỉ.")]
         [Display(Name = "Địa Chỉ")]
         public string Diachi { get; set; }
-        [Required(ErrorMessage = "Bạn cần nhập số điện thoại."), Display(Name = "Số phone")]
+
+        public DateTime? Ngaysinh { get; set; }
+
+        public int? Gioitinh { get; set; }
+
+        [Required(ErrorMessage = "Bạn cần nhập số điện thoại."), Display(Name = "Số điện thoại")]
         [Column(TypeName = "varchar(15)"), MaxLength(15)]
         [RegularExpression(@"^\(?([0-9]{3})[-. ]?([0-9]{4})[-. ]?([0-9]{3})$", ErrorMessage = "Số điện thoại không phù hợp.")]
         public string Sodienthoai { get; set; }
+
         [StringLength(100)]
         [Display(Name = "Hình")]
         public string Hinh { get; set; }
-        [NotMapped]
-        [Display(Name = "Chọn hình")]
-        public IBrowserFile ImageFile { get; set; }
-        [Display(Name = "Trạng thái")]
-        public bool Trangthai { get; set; }       
-        [Display(Name = "Mật khẩu")]
-        [Column(TypeName = "varchar(50)"), MaxLength(50)]
-        [DataType(DataType.Password)]
-        public string Matkhau { get; set; }
 
-        
-            
-            
-            
-            
-            
-            
+        [Display(Name = "Trạng thái")]
+        public bool Trangthai { get; set; }
+
+        [Display(Name = "Mật khẩu")]
+        [Column(TypeName = "varchar")]
+        [StringLength(50)]
+        [DataType(DataType.Password)]
+        [Required]
+        public string Matkhau { get; set; }
     }
 }

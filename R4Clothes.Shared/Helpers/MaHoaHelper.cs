@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Helpers
 {
-    interface IMaHoaHelper
+    public interface IMaHoaHelper
     {
         string Mahoa(string source);
     }
