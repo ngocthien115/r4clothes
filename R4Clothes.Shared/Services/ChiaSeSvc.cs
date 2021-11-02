@@ -14,9 +14,9 @@ namespace R4Clothes.Shared.Services
     {
         bool AddChiSe(ChiaSe chiaSe);
     }
-    public class ChiaSeSvc : IChiSe
+    public class ChiaSeSvc : IChiaSe
     {
-        public DataContext _context;
+        protected DataContext _context;
         public ChiaSeSvc(DataContext context)
         {
             _context = context;

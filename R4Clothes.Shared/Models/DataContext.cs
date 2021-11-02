@@ -21,6 +21,8 @@ namespace R4Clothes.Shared.Models
         public DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; }
         public DbSet<DanhGiaSanPham> DanhGiaSanPhams { get; set; }
         public DbSet<LoaiSanPham> LoaiSanPhams { get; set; }
+        public DbSet<ChiaSe> ChiaSes { get; set; }
+        public DbSet<YeuThich> YeuThichs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,6 +35,12 @@ namespace R4Clothes.Shared.Models
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
             OnModelCreatingPartial(modelBuilder);
+
+            modelBuilder.Entity<ChiTietHoaDon>()
+                .HasOne<SanPham>(s => s.SanPham)
+                .WithMany(c => c.ChiTietHoaDons)
+                .HasForeignKey(m => m.Masanpham)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

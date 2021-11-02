@@ -10,45 +10,48 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Models
 {
-    public enum Gioitinh
-    {
-        [Display(Name = "Nam")]
-        Nam,
-        [Display(Name = "Nữ")]
-        Nu,
-        [Display(Name = "LGBT")]
-        LGBT,
-    }
     public class KhachHang
     {
         [Key]
         public int Makhachhang { get; set; }
-        [Display(Name = "Họ & Tên"), Required(ErrorMessage = "Bạn cần nhập họ tên."), StringLength(150)]
+
+        [StringLength(150)]
+        [Required(ErrorMessage = "Bạn cần nhập họ tên.")]
+        [Display(Name = "Họ & Tên")]
         public string Tenkhachhang { get; set; }
-        [Display(Name = "Email"), Column(TypeName = "varchar(50)"), Required(ErrorMessage = "Bạn cần nhập email."), MaxLength(50) ]
-        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Email không phù hợp."), DataType(DataType.EmailAddress)]
+
+        [Required(ErrorMessage = "Bạn cần nhập email."), Display(Name = "Email")]
+        [Column(TypeName = "varchar(50)"), MaxLength(50)]
+        [DataType(DataType.EmailAddress)]
+        [RegularExpression(@"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}", ErrorMessage = "Email không phù hợp.")]
         public string Email { get; set; }
-        [Display(Name = "Ngày sinh"), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}"), Required(ErrorMessage = "Bạn cần chọn ngày sinh")]
-        public DateTime? NgaySinh { get; set; }
-        [Display(Name = "Giới tính")]
-        public Gioitinh Gioitinh { get; set; }
-        [Display(Name = "Địa Chỉ"), StringLength(250), Required(ErrorMessage = "Bạn cần địa chỉ.")]       
+
+        [StringLength(250)]
+        [Required(ErrorMessage = "Bạn cần địa chỉ.")]
+        [Display(Name = "Địa Chỉ")]
         public string Diachi { get; set; }
-        [Display(Name = "Số phone"), Column(TypeName = "varchar(15)"), Required(ErrorMessage = "Bạn cần nhập số điện thoại."), MaxLength(15)]
+
+        public DateTime? Ngaysinh { get; set; }
+
+        public int? Gioitinh { get; set; }
+
+        [Required(ErrorMessage = "Bạn cần nhập số điện thoại."), Display(Name = "Số điện thoại")]
+        [Column(TypeName = "varchar(15)"), MaxLength(15)]
         [RegularExpression(@"^\(?([0-9]{3})[-. ]?([0-9]{4})[-. ]?([0-9]{3})$", ErrorMessage = "Số điện thoại không phù hợp.")]
         public string Sodienthoai { get; set; }
-        [Display(Name = "Hình"), Column(TypeName = "nvarchar(100)"), StringLength(100)]
+
+        [StringLength(100)]
+        [Display(Name = "Hình")]
         public string Hinh { get; set; }
-        [NotMapped]
-        [Display(Name = "Chọn hình")]
-        public IBrowserFile ImageFile { get; set; }
+
         [Display(Name = "Trạng thái")]
-        public bool Trangthai { get; set; }       
-        [Display(Name = "Mật khẩu"), Column(TypeName = "varchar(50)"), MaxLength(50)]
+        public bool Trangthai { get; set; }
+
+        [Display(Name = "Mật khẩu")]
+        [Column(TypeName = "varchar")]
+        [StringLength(50)]
         [DataType(DataType.Password)]
+        [Required]
         public string Matkhau { get; set; }
-        public List<DanhGiaSanPham> DanhGiaSanPhams { get; set; }
-        public List<HoaDon> HoaDon { get; set; }
-        public List<ChiaSe> ChiaSes { get; set; }
     }
 }

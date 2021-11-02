@@ -12,10 +12,13 @@ namespace R4Clothes.Shared.Models
     {
         [Key]
         public int MaChiTietHoaDon { get; set; }
+
         [ForeignKey("HoaDon")]
         public int Mahoadon { get; set; }
-        [ForeignKey("SanPham")]
+
+        // [ForeignKey("SanPham")]
         public int Masanpham { get; set; }
+
         [StringLength(250)]
         [Required]
         public string Tensanpham { get; set; }
@@ -23,6 +26,7 @@ namespace R4Clothes.Shared.Models
         public int Soluong { get; set; }
         [Required]
         public double Gia { get; set; }
+      
         public HoaDon HoaDon { get; set; }
         public SanPham SanPham { get; set; }
     }
