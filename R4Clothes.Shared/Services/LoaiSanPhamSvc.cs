@@ -39,7 +39,9 @@ namespace R4Clothes.Shared.Services
 
         public List<LoaiSanPham> DanhSachLoaiSanPham()
         {
-            return _context.LoaiSanPhams.ToList();
+            List<LoaiSanPham> list = new List<LoaiSanPham>();
+            list = _context.LoaiSanPhams.ToList();
+            return list;
         }
 
         public bool XoaLoaiSanPham(int idloaisanpham)
@@ -47,7 +49,7 @@ namespace R4Clothes.Shared.Services
             bool ret;
             try
             {
-                var loaiSp = _context.LoaiSanPhams.Find(idloaisanpham);
+                LoaiSanPham loaiSp = _context.LoaiSanPhams.Find(idloaisanpham);
                 _context.LoaiSanPhams.Remove(loaiSp);
                 _context.SaveChanges();
                 ret = true;
