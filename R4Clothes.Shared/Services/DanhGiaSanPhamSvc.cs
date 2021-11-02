@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using R4Clothes.Shared.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,19 +10,38 @@ namespace R4Clothes.Shared.Services
 {
     public interface IDanhGiaSanPham
     {
-        bool AddDanhGiaSanPham(int idsanpham, string danhgia);
-        string XemDanhGiaSanPham(int idsanpham);
+        bool AddDanhGiaSanPham(DanhGiaSanPham danhGiaSanPham);
+        List<DanhGiaSanPham> XemDanhGiaTheoSanPham(int idsanpham);
     }
     public class DanhGiaSanPhamSvc : IDanhGiaSanPham
     {
-        public bool AddDanhGiaSanPham(int idsanpham, string danhgia)
+        public DataContext _context;
+        public DanhGiaSanPhamSvc(DataContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
-
-        public string XemDanhGiaSanPham(int idsanpham)
+        public bool AddDanhGiaSanPham(DanhGiaSanPham danhGiaSanPham)
         {
-            throw new NotImplementedException();
+            bool ret;
+            try
+            {
+                _context.Add(danhGiaSanPham);
+                _context.SaveChanges();
+                ret = true;
+            }
+            catch
+            {
+                ret = false;
+            }
+            return ret;
+        }
+        public List<DanhGiaSanPham> XemDanhGiaTheoSanPham(int idsanpham)
+        {
+            List<DanhGiaSanPham> list = new List<DanhGiaSanPham>();
+            list = _context.DanhGiaSanPhams.Where(x => x.Masanpham == idsanpham).OrderByDescending(x => x.Thoigian)
+                .Include(x => x.SanPham)
+                .ToList();           
+            return list;
         }
     }
 }
