@@ -13,6 +13,7 @@ namespace R4Clothes.Shared.Helpers
     }
     public class MaHoaHelper : IMaHoaHelper
     {
+
         public string Mahoa(string source)
         {
             string hash = "";

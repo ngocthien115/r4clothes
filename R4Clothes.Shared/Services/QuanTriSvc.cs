@@ -1,4 +1,5 @@
-﻿using R4Clothes.Shared.Models;
+﻿using R4Clothes.Shared.Helpers;
+using R4Clothes.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,25 +10,58 @@ namespace R4Clothes.Shared.Services
 {
     public interface IQuanTri
     {
-        bool Login();
+        QuanTri Login(QuanTri quantri);
         List<QuanTri> DanhSachQuanTri();
-        bool XoaNguoiQuanTri(int idnguoiquantri);
+        bool XoaNguoiQuanTri(int idnguoiquantri, int idqtht);
     }
     public class QuanTriSvc : IQuanTri
     {
+        protected DataContext _context;
+        protected IMaHoaHelper _maHoaHelper;
+        public QuanTriSvc(DataContext context, IMaHoaHelper maHoaHelper)
+        {
+            _context = context;
+            _maHoaHelper = maHoaHelper;
+        }
         public List<QuanTri> DanhSachQuanTri()
         {
-            throw new NotImplementedException();
+            List<QuanTri> list = new List<QuanTri>();
+            list = _context.QuanTris.ToList();
+            return list;
         }
 
-        public bool Login()
+        public QuanTri Login(QuanTri quantri)
         {
-            throw new NotImplementedException();
+            var u = _context.QuanTris.Where(
+                p => p.Taikhoan.Equals(quantri.Taikhoan)
+                && p.Matkhau.Equals(_maHoaHelper.Mahoa(quantri.Matkhau))).FirstOrDefault();
+            return u;
         }
 
-        public bool XoaNguoiQuanTri(int idnguoiquantri)
+        public bool XoaNguoiQuanTri(int idnguoiquantri, int idqtht)
         {
-            throw new NotImplementedException();
+            bool ret;
+            try
+            {
+                if (idnguoiquantri != 1 || idnguoiquantri != idqtht)
+                {
+                    QuanTri quantri = null;
+                    quantri = _context.QuanTris.Find(idnguoiquantri);
+                    _context.QuanTris.Remove(quantri);
+                    _context.SaveChanges();
+                    ret = true;
+                }
+                else
+                {
+                    ret = false;
+                }
+            }
+            catch (Exception)
+            {
+                ret = false;
+            }
+
+            return ret;
         }
     }
 }

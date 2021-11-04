@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using R4Clothes.Shared.Helpers;
 using R4Clothes.Shared.Models;
+using R4Clothes.Shared.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,8 @@ namespace R4Clothes.Shared.Services
 {
     public interface IKhachHang
     {
-        KhachHang Login(string email, string matkhau);//WebViewLogin
-        bool QuenMatKhau(string emailkh);
+        KhachHang Login(Login lg);
+        Task<bool> QuenMatKhau(string emailkh);
         Task<bool> DoiMatKhau(int idkhachhang, string oldpwd, string newpwd);
         Task<List<KhachHang>> DanhSachKhachHang();
         Task<KhachHang> GetKhachhang(int id);
@@ -25,13 +26,20 @@ namespace R4Clothes.Shared.Services
     {
         protected DataContext _context;
         protected IMaHoaHelper _mahoa;
-        public KhachHangSvc(DataContext context, IMaHoaHelper mahoa)
+        protected ISendMailHelper _sendmail;
+        protected IRandomStringHelper _randomString;
+
+        public KhachHangSvc(DataContext context, IMaHoaHelper mahoa, ISendMailHelper sendmail, IRandomStringHelper randomString)
         {
             _context = context;
             _mahoa = mahoa;
+            _sendmail = sendmail;
+            _randomString = randomString;
         }
+
         public async Task<KhachHang> AddKhachhang(KhachHang khachhang)
         {
+            khachhang.Makhachhang = 0;
             _context.Add(khachhang);
             await _context.SaveChangesAsync();
             return khachhang;
@@ -47,9 +55,9 @@ namespace R4Clothes.Shared.Services
         public async Task<bool> DoiMatKhau(int idkhachhang, string oldpwd, string newpwd)
         {
             KhachHang kh = _context.KhachHangs.Find(idkhachhang);
-            if (oldpwd == kh.Matkhau)
+            if (_mahoa.Mahoa(oldpwd) == kh.Matkhau)
             {
-                kh.Matkhau = newpwd;
+                kh.Matkhau = _mahoa.Mahoa(newpwd);
                 _context.Update(kh);
                 await _context.SaveChangesAsync();
                 return true;
@@ -78,32 +86,43 @@ namespace R4Clothes.Shared.Services
                 return false;
         }
 
-        public KhachHang Login(string email, string matkhau)
+        public KhachHang Login(Login lg)
         {
             var u = _context.KhachHangs.Where(
-                p => p.Email.Equals(email)
-                && p.Matkhau.Equals(_mahoa.Mahoa(matkhau))
+                p => p.Email.Equals(lg.User)
+                && p.Matkhau.Equals(_mahoa.Mahoa(lg.Password))
                ).FirstOrDefault();
             return u;
         }
 
-        public bool QuenMatKhau(string email)
+        public async Task<bool> QuenMatKhau(string email)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string newpwd = _randomString.RandomString();
+                KhachHang kh = _context.KhachHangs.Where(e => e.Email == email).FirstOrDefault();
+                var body = "Mật khẩu mới để đăng nhập R4 Clothes của bạn là : " + newpwd;
+                var subject = "Mật khẩu tài khoản R4 Clothes của bạn đã được reset";
+                _sendmail.SendMail(email, body, subject);
+
+                kh.Matkhau = _mahoa.Mahoa(newpwd);
+                await SuaKhachhang(kh.Makhachhang, kh);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public async Task<KhachHang> SuaKhachhang(int id, KhachHang khachhang)
         {
-            KhachHang kh_old = await _context.KhachHangs.FindAsync(id);
-            if (khachhang != null)
-            {
-                khachhang.Matkhau = kh_old.Matkhau;
-                _context.Update(khachhang);
-                await _context.SaveChangesAsync();
-                return khachhang;
-            }
-            else
-                return khachhang = null;
+            khachhang.Makhachhang = id;
+            khachhang.Matkhau = _mahoa.Mahoa(khachhang.Matkhau);
+            _context.KhachHangs.Update(khachhang);
+            await _context.SaveChangesAsync();
+            return khachhang;
         }
 
         public bool XoaKhachHang(int id)

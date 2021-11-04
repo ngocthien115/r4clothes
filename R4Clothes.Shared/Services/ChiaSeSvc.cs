@@ -5,36 +5,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.Mail;
+using R4Clothes.Shared.Helpers;
 
 namespace R4Clothes.Shared.Services
 {
     public interface IChiaSe
     {
-        Task<List<ChiaSe>> DSCS();
-        Task<bool> ThemChiaSe(ChiaSe chiase);
+        bool AddChiaSe(ChiaSe chiaSe);
     }
     public class ChiaSeSvc : IChiaSe
     {
         protected DataContext _context;
-        public ChiaSeSvc(DataContext context)
+        protected ISendMailHelper _sendmail;
+
+        public ChiaSeSvc(DataContext context, ISendMailHelper sendmail)
         {
             _context = context;
-        }
-        public async Task<List<ChiaSe>> DSCS()
-        {
-            return await _context.ChiaSes.ToListAsync();
+            _sendmail = sendmail;
         }
 
-        public async Task<bool> ThemChiaSe(ChiaSe chiase)
+        public bool AddChiaSe(ChiaSe chiaSe)
         {
-            if (chiase.EmailNguoiNhan != null || chiase.MaKhachHang != null || chiase.MaSanPham != null)
+            var khachHang = _context.KhachHangs.Find(chiaSe.MaKhachHang);
+            var sanpham = _context.SanPhams.Find(chiaSe.MaSanPham);
+            bool ret;
+            try
             {
-                _context.ChiaSes.Add(chiase);
-                await _context.SaveChangesAsync();
-                return true;
+                var subject = "Có người đề xuất món đồ đến cho bạn !";
+                var body = "Chào " + chiaSe.EmailNguoiNhan + ", một người bạn của bạn tên " + khachHang.Tenkhachhang + " đã đề xuất " + sanpham.Tensanpham + " với bạn. " +
+                    "Truy cập vào link bên dưới để có thêm thông tin. " + chiaSe.LinkSP;
+                _sendmail.SendMail(chiaSe.EmailNguoiNhan, body, subject);
+                ret = true;
             }
-            else
-                return false;
+            catch (Exception)
+            {
+                ret = false;
+            }
+            return ret;
         }
     }
 }

@@ -37,6 +37,8 @@ namespace R4ClothesAPI
 
             services.AddTransient<IMaHoaHelper, MaHoaHelper>();
             services.AddTransient<IRandomStringHelper, RandomStringHelper>();
+            services.AddTransient<ISendMailHelper, SendMailSvc>();
+
             services.AddTransient<ISanPham, SanPhamSvc>();
             services.AddTransient<IHoaDon, HoaDonSvc>();
             services.AddTransient<IChiTietHoaDon, ChiTietHoaDonSvc>();

@@ -17,8 +17,10 @@ namespace R4Clothes.Shared.Services
         Task<SanPham> AddSanPham(SanPham sanPham);
         Task<bool> SuaSanPham(int id, SanPham sanPham);
         Task<bool> XoaSanPham(int id);
-        bool ThongKe();
         List<SanPham> SanPhamLienQuan(int loaiSanPham);
+        List<SanPham> SanPhamDacBiet();
+        List<SanPham> SanPhamGiamGia();
+
     }
     public class SanPhamSvc : ISanPham
     {
@@ -42,7 +44,7 @@ namespace R4Clothes.Shared.Services
 
         public List<SanPham> DanhSachSanPham()
         {
-            List<SanPham> list = new List<SanPham>();
+            List<SanPham> list = null;
             list = _context.SanPhams.Where(t => t.Trangthai == true).ToList();
             return list;
         }
@@ -51,6 +53,20 @@ namespace R4Clothes.Shared.Services
         {
             List<SanPham> list = new List<SanPham>();
             list = _context.SanPhams.ToList();
+            return list;
+        }
+
+        public List<SanPham> SanPhamDacBiet()
+        {
+            List<SanPham> list = new List<SanPham>();
+            list = _context.SanPhams.Where(l => l.Dacbiet == true).ToList();
+            return list;
+        }
+
+        public List<SanPham> SanPhamGiamGia()
+        {
+            List<SanPham> list = new List<SanPham>();
+            list = _context.SanPhams.Where(l => l.Giamgia != 0 || l.Giamgia != null).ToList();
             return list;
         }
 
@@ -79,11 +95,6 @@ namespace R4Clothes.Shared.Services
             {
                 return false;
             }
-        }
-
-        public bool ThongKe()
-        {
-            return true;
         }
 
         public async Task<bool> XoaSanPham(int id)

@@ -23,6 +23,11 @@ namespace R4Clothes.Shared.Models
         [Required]
         public string HoTen { get; set; }
 
+        [Required]
+        [StringLength(100)]
+        public string LinkSP { get; set; }
+
+        public DateTime ThoiGian { get; set; }
         public KhachHang KhachHang { get; set; }
         public SanPham SanPham { get; set; }
     }
