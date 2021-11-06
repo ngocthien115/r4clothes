@@ -21,7 +21,6 @@ namespace R4Clothes.Shared.Models
         public DbSet<ChiTietHoaDon> ChiTietHoaDons { get; set; }
         public DbSet<DanhGiaSanPham> DanhGiaSanPhams { get; set; }
         public DbSet<LoaiSanPham> LoaiSanPhams { get; set; }
-        public DbSet<ChiaSe> ChiaSes { get; set; }
         public DbSet<YeuThich> YeuThichs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

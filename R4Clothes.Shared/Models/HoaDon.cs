@@ -43,7 +43,7 @@ namespace R4Clothes.Shared.Models
         public DateTime Ngaydat { get; set; }
 
         [Display(Name = "Trạng thái")]
-        public Trangthaidonhang Trangthai { get; set; }
+        public TrangthaiHD Trangthai { get; set; }
 
         public KhachHang KhachHang { get; set; }
         public QuanTri QuanTri { get; set; }
