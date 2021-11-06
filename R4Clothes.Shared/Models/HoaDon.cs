@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Models
 {
-    public enum Trangthaidonhang
+    public enum TrangthaiHD
     {
-        [Display(Name = "Mới đặt")]
-        Moidat = 1,
+        [Display(Name = "Hủy")]
+        Huy = -1,
+        [Display(Name = "Đang chờ xử lí")]
+        Dangchoxuli = 0,
+        [Display(Name = "Đã xác nhận")]
+        Daxacnhan = 1,
         [Display(Name = "Đang giao")]
         Danggiao = 2,
         [Display(Name = "Đã giao")]

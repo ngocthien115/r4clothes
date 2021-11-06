@@ -30,7 +30,7 @@ namespace R4Clothes.Shared.Models
         [StringLength(250)]
         [Display(Name = "Nội dung")]
         public string Noidung { get; set; }
-
+      
         public SanPham SanPham { get; set; }
         public KhachHang KhachHang { get; set; }
     }

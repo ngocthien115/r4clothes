@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,6 +27,7 @@ namespace R4Clothes.Shared.Models
         [Display(Name = "Mật khẩu")]
         [Column(TypeName = "varchar")]
         [DataType(DataType.Password)]
+        [StringLength(50)]
         public string Matkhau { get; set; }
     }
 }

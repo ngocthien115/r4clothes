@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Models
 {
-    public class SanPham
+  public class SanPham
     {
         [Key]
         public int Masanpham { get; set; }
