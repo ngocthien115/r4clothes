@@ -1,5 +1,7 @@
-﻿using R4Clothes.Shared.Helpers;
+﻿using Microsoft.EntityFrameworkCore;
+using R4Clothes.Shared.Helpers;
 using R4Clothes.Shared.Models;
+using R4Clothes.Shared.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +12,8 @@ namespace R4Clothes.Shared.Services
 {
     public interface IQuanTri
     {
-        QuanTri Login(QuanTri quantri);
-        List<QuanTri> DanhSachQuanTri();
+        QuanTri Login(Login login);
+        Task<List<QuanTri>> DanhSachQuanTri();
         bool XoaNguoiQuanTri(int idnguoiquantri, int idqtht);
         bool SuaNguoiQuanTri(int id, QuanTri quantri);
     }
@@ -24,18 +26,18 @@ namespace R4Clothes.Shared.Services
             _context = context;
             _maHoaHelper = maHoaHelper;
         }
-        public List<QuanTri> DanhSachQuanTri()
+        public async Task<List<QuanTri>> DanhSachQuanTri()
         {
             List<QuanTri> list = new List<QuanTri>();
-            list = _context.QuanTris.ToList();
+            list = await _context.QuanTris.ToListAsync();
             return list;
         }
 
-        public QuanTri Login(QuanTri quantri)
+        public QuanTri Login(Login login)
         {
             var u = _context.QuanTris.Where(
-                p => p.Taikhoan.Equals(quantri.Taikhoan)
-                && p.Matkhau.Equals(_maHoaHelper.Mahoa(quantri.Matkhau))).FirstOrDefault();
+                p => p.Taikhoan.Equals(login.User)
+                && p.Matkhau.Equals(_maHoaHelper.Mahoa(login.Password))).FirstOrDefault();
             return u;
         }
 
