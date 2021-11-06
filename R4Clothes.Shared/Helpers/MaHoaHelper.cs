@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Helpers
 {
-    interface IMaHoaHelper
+    public interface IMaHoaHelper
     {
         string Mahoa(string source);
     }
     public class MaHoaHelper : IMaHoaHelper
     {
+
         public string Mahoa(string source)
         {
             string hash = "";

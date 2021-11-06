@@ -13,13 +13,21 @@ namespace R4Clothes.Shared.Models
     {
         [Key]
         public int Maquantri { get; set; }
-        [Display(Name = "Tài khoản"), Column(TypeName = "nvarchar(100)"), Required(ErrorMessage = "Bạn cần nhập tài khoản.")]
+
+        [Column(TypeName = "nvarchar(100)")]
+        [Display(Name = "Tài khoản")]
+        [Required(ErrorMessage = "Bạn cần nhập tài khoản.")]
         public string Taikhoan { get; set; }
-        [Display(Name = "Họ tên"), Column(TypeName = "nvarchar(100)"), Required(ErrorMessage = "Bạn cần nhập họ tên.")]
+
+        [Display(Name = "Họ tên")]
+        [Required(ErrorMessage = "Bạn cần nhập họ tên.")]
+        [Column(TypeName = "nvarchar(100)")]
         public string Hoten { get; set; }
-        [Display(Name = "Mật khẩu"), Column(TypeName = "varchar(50)"), MaxLength(50), DataType(DataType.Password)]
+
+        [Display(Name = "Mật khẩu")]
+        [Column(TypeName = "varchar")]
+        [DataType(DataType.Password)]
+        [StringLength(50)]
         public string Matkhau { get; set; }
-        public List<HoaDon> HoaDons { get; set; }
-        public List<SanPham> SanPhams { get; set; }
     }
 }

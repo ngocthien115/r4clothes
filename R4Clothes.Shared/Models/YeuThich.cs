@@ -8,26 +8,17 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Models
 {
-    public class ChiaSe
+    public class YeuThich
     {
         [Key]
-        public int MaChiaSe { get; set; }
-        
+        public int Mayeuthich { get; set; }
+
         [ForeignKey("KhachHang")]
-        public int MaKhachHang { get; set; }
-        [Required]
-        public string EmailNguoiNhan { get; set; }
+        public int Makhachhang { get; set; }
 
         [ForeignKey("SanPham")]
-        public int MaSanPham { get; set; }
-        [Required]
-        public string HoTen { get; set; }
+        public int Masanpham { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string LinkSP { get; set; }
-
-        public DateTime ThoiGian { get; set; }
         public KhachHang KhachHang { get; set; }
         public SanPham SanPham { get; set; }
     }
