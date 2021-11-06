@@ -15,6 +15,7 @@ namespace R4Clothes.Shared.Services
         List<HoaDon> DanhSachHoaDon();
         bool SuaHoaDon(int iddonhang, HoaDon hoadon);
         HoaDon GetHoaDon(int id);
+        List<HoaDon> DanhSachHoaDonStatus(Trangthaidonhang tt);
     }
     public class HoaDonSvc : IHoaDon
     {
@@ -74,7 +75,7 @@ namespace R4Clothes.Shared.Services
 
         public bool SuaHoaDon(int idhoadon, HoaDon hoadon)
         {
-            HoaDon hd = _context.HoaDons.Find(idhoadon);
+            HoaDon hd = GetHoaDon(idhoadon);
             if (hd == null)
             {
                 return false;
@@ -92,6 +93,10 @@ namespace R4Clothes.Shared.Services
                     return false;
                 }
             }
+        }
+        public List<HoaDon> DanhSachHoaDonStatus(Trangthaidonhang tt) 
+        {
+            return _context.HoaDons.Where(t => t.Trangthai == tt).ToList();
         }
     }
 }

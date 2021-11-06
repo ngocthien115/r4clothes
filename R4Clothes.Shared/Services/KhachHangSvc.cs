@@ -99,16 +99,20 @@ namespace R4Clothes.Shared.Services
         {
             try
             {
-                string newpwd = _randomString.RandomString();
-                KhachHang kh = _context.KhachHangs.Where(e => e.Email == email).FirstOrDefault();
-                var body = "Mật khẩu mới để đăng nhập R4 Clothes của bạn là : " + newpwd;
-                var subject = "Mật khẩu tài khoản R4 Clothes của bạn đã được reset";
-                _sendmail.SendMail(email, body, subject);
+                string newpwd = _randomString.RandomString().ToLower();
+                if (isExist(email))
+                {
+                    KhachHang kh = _context.KhachHangs.Where(e => e.Email == email).FirstOrDefault();
+                    var body = "Mật khẩu mới để đăng nhập R4 Clothes của bạn là : " + newpwd;
+                    var subject = "Mật khẩu tài khoản R4 Clothes của bạn đã được reset";
+                    _sendmail.SendMail(email, body, subject);
 
-                kh.Matkhau = _mahoa.Mahoa(newpwd);
-                await SuaKhachhang(kh.Makhachhang, kh);
-
-                return true;
+                    kh.Matkhau = _mahoa.Mahoa(newpwd);
+                    await SuaKhachhang(kh.Makhachhang, kh);
+                    return true;
+                }
+                else
+                    return false;
             }
             catch (Exception)
             {
@@ -119,6 +123,11 @@ namespace R4Clothes.Shared.Services
         public async Task<KhachHang> SuaKhachhang(int id, KhachHang khachhang)
         {
             khachhang.Makhachhang = id;
+            KhachHang kh = await GetKhachhang(id);
+            if (khachhang.Matkhau == "0")
+            {
+                khachhang.Matkhau = kh.Matkhau;
+            }
             khachhang.Matkhau = _mahoa.Mahoa(khachhang.Matkhau);
             _context.KhachHangs.Update(khachhang);
             await _context.SaveChangesAsync();

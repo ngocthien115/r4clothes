@@ -17,6 +17,9 @@ namespace R4Clothes.Shared.Services
         Task<SanPham> AddSanPham(SanPham sanPham);
         Task<bool> SuaSanPham(int id, SanPham sanPham);
         Task<bool> XoaSanPham(int id);
+
+        Task<bool> DoiTrangThaiSanPham(int idsp, SanPham sp);
+
         List<SanPham> SanPhamLienQuan(int loaiSanPham);
         List<SanPham> SanPhamDacBiet();
         List<SanPham> SanPhamGiamGia();
@@ -92,6 +95,23 @@ namespace R4Clothes.Shared.Services
                 return true;
             }
             catch (DbUpdateConcurrencyException)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> DoiTrangThaiSanPham(int id, SanPham sanPham)
+        {
+            SanPham sp = null;
+            sp = await _context.SanPhams.FindAsync(id);
+            if (sp != null && sanPham != null)
+            {
+                sp.Trangthai = sanPham.Trangthai;
+                _context.Update(sp);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
             {
                 return false;
             }

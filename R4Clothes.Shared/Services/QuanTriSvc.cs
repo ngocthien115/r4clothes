@@ -13,6 +13,7 @@ namespace R4Clothes.Shared.Services
         QuanTri Login(QuanTri quantri);
         List<QuanTri> DanhSachQuanTri();
         bool XoaNguoiQuanTri(int idnguoiquantri, int idqtht);
+        bool SuaNguoiQuanTri(int id, QuanTri quantri);
     }
     public class QuanTriSvc : IQuanTri
     {
@@ -36,6 +37,14 @@ namespace R4Clothes.Shared.Services
                 p => p.Taikhoan.Equals(quantri.Taikhoan)
                 && p.Matkhau.Equals(_maHoaHelper.Mahoa(quantri.Matkhau))).FirstOrDefault();
             return u;
+        }
+
+        public bool SuaNguoiQuanTri(int id, QuanTri quantri)
+        {
+            quantri.Matkhau = _maHoaHelper.Mahoa(quantri.Matkhau);
+            _context.QuanTris.Update(quantri);
+            _context.SaveChanges();
+            return true;
         }
 
         public bool XoaNguoiQuanTri(int idnguoiquantri, int idqtht)

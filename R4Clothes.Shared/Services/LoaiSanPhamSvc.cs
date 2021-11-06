@@ -11,7 +11,6 @@ namespace R4Clothes.Shared.Services
     {
         bool AddLoaiSanPham(LoaiSanPham loaiSanPham);
         List<LoaiSanPham> DanhSachLoaiSanPham();
-        bool XoaLoaiSanPham(int idloaisanpham);
     }
     public class LoaiSanPhamSvc : ILoaiSanPham
     {
@@ -40,23 +39,6 @@ namespace R4Clothes.Shared.Services
         public List<LoaiSanPham> DanhSachLoaiSanPham()
         {
             return _context.LoaiSanPhams.ToList();
-        }
-
-        public bool XoaLoaiSanPham(int idloaisanpham)
-        {
-            bool ret;
-            try
-            {
-                var loaiSp = _context.LoaiSanPhams.Find(idloaisanpham);
-                _context.LoaiSanPhams.Remove(loaiSp);
-                _context.SaveChanges();
-                ret = true;
-            }
-            catch
-            {
-                ret = false;
-            }
-            return ret;
         }
     }
 }
