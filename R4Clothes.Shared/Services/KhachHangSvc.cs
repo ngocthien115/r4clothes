@@ -12,7 +12,7 @@ namespace R4Clothes.Shared.Services
 {
     public interface IKhachHang
     {
-        KhachHang Login(Login lg);
+        KhachHang Login(LoginKH loginKH);
         Task<bool> QuenMatKhau(string emailkh);
         Task<bool> DoiMatKhau(int idkhachhang, string oldpwd, string newpwd);
         Task<List<KhachHang>> DanhSachKhachHang();
@@ -55,6 +55,7 @@ namespace R4Clothes.Shared.Services
         public async Task<bool> DoiMatKhau(int idkhachhang, string oldpwd, string newpwd)
         {
             KhachHang kh = _context.KhachHangs.Find(idkhachhang);
+            var a = _mahoa.Mahoa(oldpwd);
             if (_mahoa.Mahoa(oldpwd) == kh.Matkhau)
             {
                 kh.Matkhau = _mahoa.Mahoa(newpwd);
@@ -86,11 +87,11 @@ namespace R4Clothes.Shared.Services
                 return false;
         }
 
-        public KhachHang Login(Login lg)
+        public KhachHang Login(LoginKH loginKH)
         {
             var u = _context.KhachHangs.Where(
-                p => p.Email.Equals(lg.User)
-                && p.Matkhau.Equals(_mahoa.Mahoa(lg.Password))
+                p => p.Email.Equals(loginKH.Email)
+                && p.Matkhau.Equals(_mahoa.Mahoa(loginKH.Password))
                ).FirstOrDefault();
             return u;
         }
@@ -122,14 +123,32 @@ namespace R4Clothes.Shared.Services
 
         public async Task<KhachHang> SuaKhachhang(int id, KhachHang khachhang)
         {
-            khachhang.Makhachhang = id;
-            KhachHang kh = await GetKhachhang(id);
-            if (khachhang.Matkhau == "0")
+            //khachhang.Makhachhang = id;
+            //KhachHang kh = await GetKhachhang(id);           
+            //if (khachhang.Matkhau == "0")
+            //{
+            //    khachhang.Matkhau = kh.Matkhau;
+            //}
+            //khachhang.Matkhau = _mahoa.Mahoa(khachhang.Matkhau);
+            //_context.KhachHangs.Update(khachhang);
+            //_context.KhachHangs.Update(khachhang);
+
+            KhachHang kh = null;
+            kh = _context.KhachHangs.Find(id);
+            kh.Tenkhachhang = khachhang.Tenkhachhang;
+            kh.Diachi = khachhang.Diachi;
+            kh.Email = khachhang.Email;
+            kh.Gioitinh = khachhang.Gioitinh;
+            kh.Hinh = khachhang.Hinh;
+            kh.Ngaysinh = khachhang.Ngaysinh;
+            kh.Sodienthoai = khachhang.Sodienthoai;
+            kh.Trangthai = khachhang.Trangthai;
+            if (kh.Matkhau != null)
             {
-                khachhang.Matkhau = kh.Matkhau;
+                khachhang.Matkhau = _mahoa.Mahoa(khachhang.Matkhau);
+                kh.Matkhau = khachhang.Matkhau;
             }
-            khachhang.Matkhau = _mahoa.Mahoa(khachhang.Matkhau);
-            _context.KhachHangs.Update(khachhang);
+            _context.Update(kh);
             await _context.SaveChangesAsync();
             return khachhang;
         }
@@ -137,7 +156,7 @@ namespace R4Clothes.Shared.Services
         public bool XoaKhachHang(int id)
         {
             KhachHang kh = _context.KhachHangs.Find(id);
-            if (kh != null)
+            if (kh != null && kh.Trangthai == false)
             {
                 _context.Remove(kh);
                 _context.SaveChanges();
