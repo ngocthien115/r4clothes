@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R4ClothesAPI", "R4ClothesAPI\R4ClothesAPI.csproj", "{2095917C-B7AA-4D6A-94C2-3BECD79075DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "R4Clothes.Shared", "R4Clothes.Shared\R4Clothes.Shared.csproj", "{7437A194-0DE5-44CE-9B17-58E53C7FA71A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "R4Clothes.Shared", "R4Clothes.Shared\R4Clothes.Shared.csproj", "{7437A194-0DE5-44CE-9B17-58E53C7FA71A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

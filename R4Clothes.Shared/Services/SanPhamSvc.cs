@@ -12,6 +12,7 @@ namespace R4Clothes.Shared.Services
 {
     public interface ISanPham
     {
+        List<SanPham> LoadYeuThich(int idkh);
         List<SanPham> DanhSachSanPhamAdmin();
         List<SanPham> DanhSachSanPham();
         Task<SanPham> AddSanPham(SanPham sanPham);
@@ -28,6 +29,12 @@ namespace R4Clothes.Shared.Services
     public class SanPhamSvc : ISanPham
     {
         protected DataContext _context;
+
+        public SanPhamSvc(DataContext context)
+        {
+            _context = context;
+        }
+
         public async Task<SanPham> AddSanPham(SanPham sanPham)
         {
             using var transaction = _context.Database.BeginTransaction();
@@ -136,6 +143,19 @@ namespace R4Clothes.Shared.Services
             {
                 return false;
             }
+        }
+
+        public List<SanPham> LoadYeuThich(int idkh)
+        {
+            var yeuthich = _context.YeuThichs.ToList();
+            var sanpham = _context.SanPhams.ToList();
+
+            var ls = (from y in yeuthich
+                      join s in sanpham
+                      on y.Masanpham equals s.Masanpham
+                      where y.Makhachhang == idkh
+                      select s).ToList();
+            return ls;
         }
     }
 }

@@ -31,15 +31,16 @@ namespace R4ClothesAPI.Controllers
         // POST: api/KhachHangs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<KhachHang> PostKhachHang([FromBody] KhachHang khachhang)
+        public async Task<IActionResult> PostKhachHang([FromBody] KhachHang khachhang)
         {
             if (khachhang != null)
             {
-                return await _khachhangSvc.AddKhachhang(khachhang);
+                await _khachhangSvc.AddKhachhang(khachhang);
+                return Ok("Đã thêm thành công");
             }
             else
             {
-                return khachhang = null;
+                return BadRequest("Thêm thất bại");
             }
         }
 

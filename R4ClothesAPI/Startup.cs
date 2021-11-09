@@ -46,6 +46,8 @@ namespace R4ClothesAPI
             services.AddTransient<IKhachHang, KhachHangSvc>();
             services.AddTransient<ILoaiSanPham, LoaiSanPhamSvc>();
             services.AddTransient<IDanhGiaSanPham, DanhGiaSanPhamSvc>();
+            services.AddTransient<IYeuThich, YeuThichSvc>();
+
 
             services.AddSwaggerGen(c =>
             {
