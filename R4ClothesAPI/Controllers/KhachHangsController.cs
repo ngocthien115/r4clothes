@@ -43,6 +43,13 @@ namespace R4ClothesAPI.Controllers
             }
         }
 
+        // GET: api/Khachhangs/5
+        [HttpGet("{id}")]
+        public async Task<KhachHang> GetKhachhang(int id)
+        {
+            return await _khachhangSvc.GetKhachhang(id);
+        }
+
         // PUT: api/Khachhangs/5
         [HttpPut("{id}")]
         public async Task<KhachHang> ChinhSuaKH(int id, [FromBody] KhachHang kh)
@@ -54,7 +61,9 @@ namespace R4ClothesAPI.Controllers
         [HttpDelete("{id}")]
         public bool ChinhSuaKH(int id)
         {
-            return _khachhangSvc.XoaKhachHang(id);
+            return _khachhangSvc.XoaKhachHang(id);             
         }
+
+        
     }
 }

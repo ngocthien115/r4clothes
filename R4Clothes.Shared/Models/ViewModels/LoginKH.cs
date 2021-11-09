@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace R4Clothes.Shared.Models.ViewModels
 {
-    public class Login
+    public class LoginKH
     {
         [Required]
-        public string User { get; set; }
+        public string Email { get; set; }
+
         [Required]
         public string Password { get; set; }
     }
