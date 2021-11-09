@@ -10,8 +10,8 @@ namespace R4Clothes.Shared.Services
 {
     public interface IDanhGiaSanPham
     {
-        bool AddDanhGiaSanPham(int idsanpham, DanhGiaSanPham danhgia);
-        List<DanhGiaSanPham> XemDanhGiaSanPham(int idsanpham);
+        Task<DanhGiaSanPham> AddDanhGiaSanPham(DanhGiaSanPham danhgia);
+        Task<List<DanhGiaSanPham>> DanhGiaSanPhamTheoIDSP(int idsp);
     }
     public class DanhGiaSanPhamSvc : IDanhGiaSanPham
     {
@@ -20,30 +20,18 @@ namespace R4Clothes.Shared.Services
         {
             _context = context;
         }
-        public bool AddDanhGiaSanPham(int idsanpham, DanhGiaSanPham danhgia)
+        public async Task<DanhGiaSanPham> AddDanhGiaSanPham(DanhGiaSanPham danhgia)
         {
-            bool ret;
-            try
-            {
-                danhgia.Masanpham = idsanpham;
-                _context.Add(danhgia);
-                _context.SaveChanges();
-                ret = true;
-            }
-            catch
-            {
-                ret = false;
-            }
-            return ret;
+            _context.Add(danhgia);
+            await _context.SaveChangesAsync();
+            return danhgia;
         }
 
-        public List<DanhGiaSanPham> XemDanhGiaSanPham(int idsanpham)
+        public async Task<List<DanhGiaSanPham>> DanhGiaSanPhamTheoIDSP(int idsp)
         {
-            List<DanhGiaSanPham> list = new List<DanhGiaSanPham>();
-            list = _context.DanhGiaSanPhams.Where(x => x.Masanpham == idsanpham).OrderByDescending(x => x.Thoigian)
-                .Include(x => x.SanPham)
-                .ToList();
-            return list;
+            List<DanhGiaSanPham> danhgiasanpham = new List<DanhGiaSanPham>();
+            danhgiasanpham = await _context.DanhGiaSanPhams.Where(t => t.Masanpham == idsp).ToListAsync();
+            return danhgiasanpham;
         }
     }
 }
