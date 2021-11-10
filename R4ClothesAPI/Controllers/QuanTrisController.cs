@@ -20,7 +20,6 @@ namespace R4ClothesAPI.Controllers
         private readonly IKhachHang _khachHangSvc;
         private readonly IHoaDon _hoaDonSvc;
         private readonly IMaHoaHelper _maHoa;
-
         public QuanTrisController(IQuanTri quanTriSvc, ISanPham sanPhamSvc, IKhachHang khachHangSvc, IHoaDon hoaDonSvc, IMaHoaHelper maHoa)
         {
             _quanTriSvc = quanTriSvc;
@@ -30,19 +29,18 @@ namespace R4ClothesAPI.Controllers
             _maHoa = maHoa;
         }
 
-
         // GET: api/QuanTris
-        [HttpGet]
+        [HttpGet("dsqt")]
         public List<QuanTri> GetQuanTris()
         {
             return _quanTriSvc.DanhSachQuanTri();
         }
 
         // GET: api/QuanTris/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<QuanTri>> GetQuanTri(int id)
+        [HttpGet("get/{id}")]
+        public ActionResult<QuanTri> GetQuanTri(int id)
         {
-            var quanTri = await _quanTriSvc.GetQuanTri(id);
+            var quanTri = _quanTriSvc.GetQuanTri(id);
 
             if (quanTri == null)
             {
@@ -52,36 +50,52 @@ namespace R4ClothesAPI.Controllers
             return quanTri;
         }
 
-        [HttpPost("/api/quantris/edit")]
+        [HttpPost("edit/{id}")]
         public async Task<IActionResult> SuaQuanTri(int id, [FromBody] QuanTri quanTri)
         {
-            if (id != quanTri.Maquantri)
+            if (quanTri == null)
             {
                 return NotFound();
             }
             else
             {
-                var qt = await _quanTriSvc.GetQuanTri(id);
-                if (qt == null)
+                bool flag = await _quanTriSvc.SuaNguoiQuanTri(id, quanTri);
+                if (flag)
                 {
-                    return NotFound();
+                    return Ok("Đã sửa");
                 }
                 else
                 {
-                    bool flag = await _quanTriSvc.SuaNguoiQuanTri(id, quanTri);
-                    if (flag)
-                    {
-                        return Ok("Đã sửa");
-                    }
-                    else
-                    {
-                        return BadRequest("Lỗi");
-                    }
+                    return BadRequest("Lỗi");
                 }
             }
         }
 
-        [HttpPost("/api/quantris/add")]
+        [HttpPost("doimatkhau")]
+        public IActionResult DoiMatKhau(int id, string mkcu, string newpwd)
+        {
+            var qt = new QuanTri();
+            qt = _quanTriSvc.GetQuanTri(id);
+            if (id != 0 || _maHoa.Mahoa(mkcu) == qt.Matkhau)
+            {
+                bool flag = _quanTriSvc.DoiMatKhau(id, newpwd);
+                if (flag)
+                {
+                    return Ok("Đã sửa");
+                }
+                else
+                {
+                    return BadRequest("Lỗi");
+                }
+            }
+            else
+            {
+                return BadRequest("Lỗi");
+                
+            }
+        }
+
+        [HttpPost("add")]
         public async Task<QuanTri> ThemQuanTri([FromBody] QuanTri quantri)
         {
             if (quantri != null)
@@ -92,6 +106,55 @@ namespace R4ClothesAPI.Controllers
             else
             {
                 return quantri = null;
+            }
+        }
+
+
+        // --- Chức năng của người quản trị
+        // Sản phẩm
+        [HttpGet("sanpham")]
+        public List<SanPham> DSSP()
+        {
+            return _sanPhamSvc.DanhSachSanPhamAdmin();
+        }
+
+        [HttpPost("sanpham/edit")]
+        public async Task<bool> SuaSanPham(int idsp, SanPham sp)
+        {
+            return await _sanPhamSvc.SuaSanPham(idsp, sp);
+        }
+
+        // Hóa đơn
+        [HttpGet("hoadon/getall")]
+        public List<HoaDon> GetAll()
+        {
+            return _hoaDonSvc.DanhSachHoaDon();
+        }
+        
+        [HttpPost("hoadon/suahd")]
+        public bool SuaHoaDon(int idhd, int nguoiql, TrangthaiHD tt)
+        {
+            return _hoaDonSvc.SuaHoaDon(idhd, nguoiql, tt);
+        }
+
+        // Khách hàng
+        [HttpPost("khachhang/xoakh/{id}")]
+        public bool DeleteKH(int id)
+        {
+            return _khachHangSvc.XoaKhachHang(id);
+        }
+
+        [HttpPost("khachhang/thaydoitt")]
+        public async Task<IActionResult> ThayDoiTT(int idkh, KhachHang kh)
+        {
+            var khachhang = await _khachHangSvc.SuaKhachhang(idkh, kh);
+            if (khachhang != null)
+            {
+                return Ok("Đã cập nhật thành công!");
+            }
+            else
+            {
+                return NotFound("Lỗi khi kết nối");
             }
         }
     }

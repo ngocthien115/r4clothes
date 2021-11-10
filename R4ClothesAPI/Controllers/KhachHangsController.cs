@@ -20,14 +20,6 @@ namespace R4ClothesAPI.Controllers
             _khachhangSvc = khachHang;
         }
 
-        // GET: api/khachhangs
-        [HttpGet]
-        public async Task<List<KhachHang>> DSKH()
-        {
-            return await _khachhangSvc.DanhSachKhachHang();
-            
-        }
-
         // POST: api/KhachHangs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -44,18 +36,37 @@ namespace R4ClothesAPI.Controllers
             }
         }
 
-        // PUT: api/Khachhangs/5
-        [HttpPut("{id}")]
-        public async Task<KhachHang> ChinhSuaKH(int id, [FromBody] KhachHang kh)
+        // GET: api/Khachhangs/5
+        [HttpGet("{id}")]
+        public async Task<KhachHang> GetKhachhang(int id)
         {
-            return await _khachhangSvc.SuaKhachhang(id, kh);
+            return await _khachhangSvc.GetKhachhang(id);
         }
 
-        // DELETE: api/Khachhangs/5
-        [HttpDelete("{id}")]
-        public bool ChinhSuaKH(int id)
+        // PUT: api/Khachhangs/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> ChinhSuaKH(int id, [FromBody] KhachHang kh)
         {
-            return _khachhangSvc.XoaKhachHang(id);
+            if (await _khachhangSvc.SuaKhachhang(id, kh) != null)
+            {
+                return Ok("Đã sửa thành công");
+            }
+            else
+            {
+                return NotFound("Lỗi khi sửa");
+            }
+        }
+
+        [HttpPost("quenmatkhau")]
+        public Task<bool> QuenMatKhau(string email)
+        {
+            return _khachhangSvc.QuenMatKhau(email);
+        }
+
+        [HttpPost("doimatkhau")]
+        public Task<bool> DoiMatKhau(int idkhachhang, string oldpwd, string newpwd)
+        {
+            return _khachhangSvc.DoiMatKhau(idkhachhang, oldpwd, newpwd);
         }
     }
 }

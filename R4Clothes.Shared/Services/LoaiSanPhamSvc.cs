@@ -1,4 +1,5 @@
-﻿using R4Clothes.Shared.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using R4Clothes.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace R4Clothes.Shared.Services
 {
     public interface ILoaiSanPham
     {
-        bool AddLoaiSanPham(LoaiSanPham loaiSanPham);
-        List<LoaiSanPham> DanhSachLoaiSanPham();
+        Task<LoaiSanPham> AddLoaiSanPham(LoaiSanPham loaiSanPham);
+        Task<List<LoaiSanPham>> DanhSachLoaiSanPham();
     }
     public class LoaiSanPhamSvc : ILoaiSanPham
     {
@@ -19,26 +20,17 @@ namespace R4Clothes.Shared.Services
         {
             _context = context;
         }
-        public bool AddLoaiSanPham(LoaiSanPham loaiSanPham)
+        public async Task<LoaiSanPham> AddLoaiSanPham(LoaiSanPham loaiSanPham)
         {
-            bool ret;
-            try
-            {
-                //loaiSanPham.Maloai = 0;
-                _context.LoaiSanPhams.Add(loaiSanPham);
-                _context.SaveChanges();
-                ret = true;
-            }
-            catch
-            {
-                ret = false;
-            }
-            return ret;
+            loaiSanPham.Maloai = 0;
+            _context.Add(loaiSanPham);
+            await _context.SaveChangesAsync();
+            return loaiSanPham;
         }
 
-        public List<LoaiSanPham> DanhSachLoaiSanPham()
+        public async Task<List<LoaiSanPham>> DanhSachLoaiSanPham()
         {
-            return _context.LoaiSanPhams.ToList();
+            return await _context.LoaiSanPhams.ToListAsync();
         }
     }
 }

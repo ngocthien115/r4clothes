@@ -23,7 +23,7 @@ namespace R4ClothesAPI.Controllers
         }
 
         // GET: api/YeuThichs/5
-        [HttpGet("{id}")]
+        [HttpGet("khachhang/{id}")]
         public List<SanPham> GetYeuThich(int idkhachhang)
         {
             return _sanPhamSvc.LoadYeuThich(idkhachhang);

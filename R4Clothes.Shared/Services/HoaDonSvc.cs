@@ -13,7 +13,7 @@ namespace R4Clothes.Shared.Services
         int AddHoaDon(HoaDon hoadon);
         List<HoaDon> DanhSachHoaDonTheoKhachHang(int idnguoidung);
         List<HoaDon> DanhSachHoaDon();
-        bool SuaHoaDon(int iddonhang, HoaDon hoadon);
+        bool SuaHoaDon(int iddonhang, int idquanly, TrangthaiHD tt);
         HoaDon GetHoaDon(int id);
         List<HoaDon> DanhSachHoaDonStatus(TrangthaiHD tt);
     }
@@ -44,10 +44,7 @@ namespace R4Clothes.Shared.Services
         {
             List<HoaDon> list = new List<HoaDon>();
             // sử dụng kỹ thuật loading Eager // từ khóa Include
-            list = _context.HoaDons.OrderByDescending(x => x.Ngaydat)
-                .Include(x => x.KhachHang)
-                .Include(x => x.ChiTietHoaDons)
-                .ToList();
+            list = _context.HoaDons.OrderByDescending(x => x.Ngaydat).ToList();
             return list;
         }
 
@@ -55,10 +52,7 @@ namespace R4Clothes.Shared.Services
         {
             List<HoaDon> list = new List<HoaDon>();
             // sử dụng kỹ thuật loading Eager // từ khóa Include
-            list = _context.HoaDons.Where(x => x.Makhachhang == idnguoidung).OrderByDescending(x => x.Ngaydat)
-                .Include(x => x.KhachHang)
-                .Include(x => x.ChiTietHoaDons)
-                .ToList();
+            list = _context.HoaDons.Where(h => h.Makhachhang == idnguoidung).ToList();
             return list;
         }
 
@@ -73,7 +67,7 @@ namespace R4Clothes.Shared.Services
             return hoadon;
         }
 
-        public bool SuaHoaDon(int idhoadon, HoaDon hoadon)
+        public bool SuaHoaDon(int idhoadon, int idquanly, TrangthaiHD tt)
         {
             HoaDon hd = GetHoaDon(idhoadon);
             if (hd == null)
@@ -84,7 +78,8 @@ namespace R4Clothes.Shared.Services
             {
                 try
                 {
-                    _context.Update(hoadon);
+                    hd.Nguoiquantri = idquanly;
+                    hd.Trangthai = tt;
                     _context.SaveChanges();
                     return true;
                 }

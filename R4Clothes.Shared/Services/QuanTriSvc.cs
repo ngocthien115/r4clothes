@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using R4Clothes.Shared.Helpers;
 using R4Clothes.Shared.Models;
+using R4Clothes.Shared.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,12 @@ namespace R4Clothes.Shared.Services
 {
     public interface IQuanTri
     {
-        QuanTri Login(QuanTri quantri);
+        QuanTri Login(Login login);
         List<QuanTri> DanhSachQuanTri();
         bool XoaNguoiQuanTri(int idnguoiquantri, int idqtht);
         Task<bool> SuaNguoiQuanTri(int id, QuanTri quantri);
-        Task<QuanTri> GetQuanTri(int id);
+        bool DoiMatKhau(int id, string newpwd);
+        QuanTri GetQuanTri(int id);
         Task<QuanTri> ThemQuanTri(QuanTri quantri);
         bool ExistQuanTri(string username);
     }
@@ -48,36 +50,56 @@ namespace R4Clothes.Shared.Services
             }
         }
 
-        public async Task<QuanTri> GetQuanTri(int id)
+        public QuanTri GetQuanTri(int id)
         {
-            return await _context.QuanTris.FindAsync(id);
+            return _context.QuanTris.Find(id);
         }
 
-        public QuanTri Login(QuanTri quantri)
+        public QuanTri Login(Login login)
         {
             var u = _context.QuanTris.Where(
-                p => p.Taikhoan.Equals(quantri.Taikhoan)
-                && p.Matkhau.Equals(_maHoaHelper.Mahoa(quantri.Matkhau))).FirstOrDefault();
+                p => p.Taikhoan.Equals(login.User)
+                && p.Matkhau.Equals(_maHoaHelper.Mahoa(login.Password))).FirstOrDefault();
             return u;
         }
 
         public async Task<bool> SuaNguoiQuanTri(int id, QuanTri quantri)
         {
-            QuanTri qt = await GetQuanTri(id);
-            if (quantri.Matkhau == "" || quantri.Matkhau =="0") // Khi thay đổi thông tin
+            try
             {
-                quantri.Matkhau = qt.Matkhau;
-                _context.QuanTris.Update(quantri);
-                await _context.SaveChangesAsync();
+                QuanTri qt = _context.QuanTris.Find(id);
+                if (qt != null)
+                {
+                    qt.Maquantri = id;
+                    qt.Hoten = quantri.Hoten;
+                    qt.Taikhoan = quantri.Taikhoan;
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool DoiMatKhau(int id, string newpwd)
+        {
+            try
+            {
+                QuanTri qt = _context.QuanTris.Find(id);
+                qt.Matkhau = _maHoaHelper.Mahoa(newpwd);
+                _context.SaveChanges();
                 return true;
             }
-            else
+            catch (Exception)
             {
-                quantri.Matkhau = _maHoaHelper.Mahoa(quantri.Matkhau);// khi đổi mật khẩu
-                _context.QuanTris.Update(quantri);
-                await _context.SaveChangesAsync();
-                return true;
+                return false;
             }
+            
         }
 
         public async Task<QuanTri> ThemQuanTri(QuanTri quantri)
@@ -88,6 +110,8 @@ namespace R4Clothes.Shared.Services
             }
             else
             {
+                quantri.Maquantri = 0;
+                quantri.Matkhau = _maHoaHelper.Mahoa(quantri.Matkhau);
                 _context.QuanTris.Add(quantri);
                 await _context.SaveChangesAsync();
                 return quantri;

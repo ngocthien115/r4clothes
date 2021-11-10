@@ -35,8 +35,16 @@ namespace R4Clothes.Shared.Services
         public async Task<List<HoaDon>> DoanhThu(DateTime from, DateTime to)
         {
             List<HoaDon> hd = null;
-            hd = await _context.HoaDons.Where(d => d.Ngaydat.Date == from && d.Ngaydat.Date <= to).ToListAsync();
-            return hd;
+            if (from ==  null|| to == null)
+            {
+                hd = _hoadonSvc.DanhSachHoaDon();
+                return hd;
+            }
+            else
+            {
+                hd = await _context.HoaDons.Where(d => d.Ngaydat.Date >= from && d.Ngaydat.Date <= to).ToListAsync();
+                return hd;
+            }
         }
 
         public List<KhachHangTT> KhachHangThanThiet()

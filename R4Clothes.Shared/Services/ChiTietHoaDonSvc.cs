@@ -11,7 +11,7 @@ namespace R4Clothes.Shared.Services
     public interface IChiTietHoaDon
     {
         bool AddChiTietHoaDon(ChiTietHoaDon chiTietHoaDon);
-        List<ViewDetails> GetChiTiet(int maHoaDon); // list ViewDetails
+        List<SanPhamCT> GetChiTiet(int maHoaDon);
 
     }
     public class ChiTietHoaDonSvc : IChiTietHoaDon
@@ -35,24 +35,22 @@ namespace R4Clothes.Shared.Services
             }
         }
 
-        public List<ViewDetails> GetChiTiet(int id)
+        public List<SanPhamCT> GetChiTiet(int id)
         {
             List<SanPham> sanpham = _context.SanPhams.ToList();
-            List<HoaDon> hoadon = _context.HoaDons.ToList();
-            List<ChiTietHoaDon> chitiethoadon = _context.ChiTietHoaDons.ToList();
+            List<ChiTietHoaDon> chitiet = _context.ChiTietHoaDons.Where(c => c.Mahoadon == id).ToList();
 
-            List<ViewDetails> danhsach = (from sp in sanpham
-                                          join ct in chitiethoadon on sp.Masanpham equals ct.Masanpham into table1
-                                          from ct in table1.ToList()
-                                          join hd in hoadon on ct.Mahoadon equals hd.Mahoadon into table2
-                                          from hd in table2.ToList()
-                                          where ct.Mahoadon == id
-                                          select new ViewDetails
-                                          {
-                                              hoadon = hd,
-                                              sanpham = sp,
-                                              chitiethoadon = ct
-                                          }).ToList();
+            List<SanPhamCT> danhsach = (from sp in sanpham
+                                      join ct in chitiet
+                                      on sp.Masanpham equals ct.Masanpham
+                                      where ct.Mahoadon == id
+                                      select new SanPhamCT 
+                                      { 
+                                          TenSanPham = sp.Tensanpham,
+                                          Gia = sp.Gia,
+                                          Hinh = sp.Hinh,
+                                          SoLuongMua = ct.Soluong,
+                                      }).ToList();
             return danhsach;
         }
     }

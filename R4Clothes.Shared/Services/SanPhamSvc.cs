@@ -12,29 +12,41 @@ namespace R4Clothes.Shared.Services
 {
     public interface ISanPham
     {
+        SanPham GetSanPham(int id);
         List<SanPham> LoadYeuThich(int idkh);
         List<SanPham> DanhSachSanPhamAdmin();
         List<SanPham> DanhSachSanPham();
         Task<SanPham> AddSanPham(SanPham sanPham);
         Task<bool> SuaSanPham(int id, SanPham sanPham);
         Task<bool> XoaSanPham(int id);
-
-        Task<bool> DoiTrangThaiSanPham(int idsp, SanPham sp);
-
+        bool GiamSL(int idsp, int sl);
         List<SanPham> SanPhamLienQuan(int loaiSanPham);
         List<SanPham> SanPhamDacBiet();
-        List<SanPham> SanPhamGiamGia();
+        List<SanPham> SanPhamGiamGia(int giamgia);
 
     }
     public class SanPhamSvc : ISanPham
     {
         protected DataContext _context;
-
         public SanPhamSvc(DataContext context)
         {
             _context = context;
         }
 
+        public SanPham GetSanPham(int id)
+        {
+            var sp = _context.SanPhams.Find(id);
+            if (sp != null)
+            {
+                sp.Soluotxem += 1;
+                return sp;
+            }
+            else
+            {
+                return sp = null;
+            }
+            
+        }
         public async Task<SanPham> AddSanPham(SanPham sanPham)
         {
             using var transaction = _context.Database.BeginTransaction();
@@ -73,10 +85,18 @@ namespace R4Clothes.Shared.Services
             return list;
         }
 
-        public List<SanPham> SanPhamGiamGia()
+        public List<SanPham> SanPhamGiamGia(int giamgia)
         {
             List<SanPham> list = new List<SanPham>();
-            list = _context.SanPhams.Where(l => l.Giamgia != 0 || l.Giamgia != null).ToList();
+            
+            if (giamgia != 0)
+            {
+                list = _context.SanPhams.Where(g => g.Giamgia == giamgia).ToList();
+            }
+            else
+            {
+                list = _context.SanPhams.Where(g => g.Giamgia > 0).ToList();
+            }
             return list;
         }
 
@@ -93,7 +113,6 @@ namespace R4Clothes.Shared.Services
             {
                 return false;
             }
-
             _context.Entry(sanPham).State = EntityState.Modified;
 
             try
@@ -106,16 +125,14 @@ namespace R4Clothes.Shared.Services
                 return false;
             }
         }
-
-        public async Task<bool> DoiTrangThaiSanPham(int id, SanPham sanPham)
+        public bool GiamSL(int idsp, int sl)
         {
-            SanPham sp = null;
-            sp = await _context.SanPhams.FindAsync(id);
-            if (sp != null && sanPham != null)
+            var sp = new SanPham();
+            sp = _context.SanPhams.Find(idsp);
+            if (sp != null)
             {
-                sp.Trangthai = sanPham.Trangthai;
-                _context.Update(sp);
-                await _context.SaveChangesAsync();
+                sp.Soluong -= sl;
+                _context.SaveChanges();
                 return true;
             }
             else
@@ -123,7 +140,6 @@ namespace R4Clothes.Shared.Services
                 return false;
             }
         }
-
         public async Task<bool> XoaSanPham(int id)
         {
             try
