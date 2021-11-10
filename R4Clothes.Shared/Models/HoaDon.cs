@@ -20,8 +20,6 @@ namespace R4Clothes.Shared.Models
         Danggiao = 2,
         [Display(Name = "Đã giao")]
         Dagiao = 3,
-        [Display(Name = "Đã hủy")]
-        Dahuy = -1
     }
     public class HoaDon
     {

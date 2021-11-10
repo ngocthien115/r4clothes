@@ -17,31 +17,46 @@ namespace R4ClothesAPI.Controllers
     {
         private IHoaDon _hoadonSvc;
         private IChiTietHoaDon _chitiethoadonSvc;
+        private ISanPham _sanPhamSvc;
 
-        public HoaDonsController(IHoaDon hoaDonSvc, IChiTietHoaDon chiTietHoaDonSvc)
+        public HoaDonsController(IHoaDon hoadonSvc, IChiTietHoaDon chitiethoadonSvc, ISanPham sanPhamSvc)
         {
-            _hoadonSvc = hoaDonSvc;
-            _chitiethoadonSvc = chiTietHoaDonSvc;
+            _hoadonSvc = hoadonSvc;
+            _chitiethoadonSvc = chitiethoadonSvc;
+            _sanPhamSvc = sanPhamSvc;
+        }
+
+
+        /// <summary>
+        /// Lấy thông tin 1 hóa đơn
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("/api/hoadon/{id}")]
+        public HoaDon GetHoaDon(int id)
+        {
+            return _hoadonSvc.GetHoaDon(id);
         }
 
         // GET: api/hoadons
-        [HttpGet("{id}")]
-        public List<HoaDon> DSDH(int id)
+        /// <summary>
+        /// Danh sách hóa đơn theo khách hàng
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("/api/hoadon/khachhang/{id}")]
+        public List<HoaDon> DSDHByKH(int id)
         {
             return  _hoadonSvc.DanhSachHoaDonTheoKhachHang(id);
 
         }
-        // PUT: api/hoadons/5
-        [HttpPut("{id}")]
-        public bool ChinhSuaHD(int id, [FromBody] HoaDon hd)
-        {
-            return  _hoadonSvc.SuaHoaDon(id, hd);
-        }
-        [HttpGet]
-        public List<HoaDon> DSDHST(TrangthaiHD tt)
-        {
-            return _hoadonSvc.DanhSachHoaDonStatus(tt);
-        }
+        
+
+        /// <summary>
+        /// Thêm hóa đơn mới
+        /// </summary>
+        /// <param name="GioHang"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult PostCart(Cart GioHang)
         {
@@ -51,11 +66,11 @@ namespace R4ClothesAPI.Controllers
                 {
                     Trangthai = TrangthaiHD.Dangchoxuli,
                     Makhachhang = GioHang.Makhachhang,
+                    Nguoiquantri = 2,
                     Tongtien = GioHang.Tongtien,
                     Ngaydat = DateTime.Now,
                 };
                 int Mahoadon =  _hoadonSvc.AddHoaDon(hoadon);
-                hoadon.Mahoadon = Mahoadon;
 
                 List<CartItem> dataCart = GioHang.ListViewCart;
                 for (int i = 0; i < dataCart.Count; i++)
@@ -64,18 +79,19 @@ namespace R4ClothesAPI.Controllers
                     {
                         Mahoadon = Mahoadon,
                         Masanpham = dataCart[i].SanPham.Masanpham,
-                        Soluong = dataCart[i].Trangthai,
-                        Gia = dataCart[i].SanPham.Gia * dataCart[i].Trangthai,
+                        Tensanpham = dataCart[i].SanPham.Tensanpham,
+                        Soluong = dataCart[i].Soluong,
+                        Gia = dataCart[i].SanPham.Gia,
                     };
                     _chitiethoadonSvc.AddChiTietHoaDon(chitiet);
+                    _sanPhamSvc.GiamSL(chitiet.Masanpham, chitiet.Soluong);
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest(-1);
             }
             return Ok(1);
         }
-
     }
 }

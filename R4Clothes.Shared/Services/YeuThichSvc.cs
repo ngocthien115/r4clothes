@@ -11,9 +11,9 @@ namespace R4Clothes.Shared.Services
 {
     public interface IYeuThich
     {
-        Task<List<YeuThich>> DanhSachYeuThichTheoID(int id);
         Task<YeuThich> ThemYeuThich(YeuThich yeuthich);
-        Task<bool> XoaYeuThich(int id);
+        Task<bool> XoaYeuThich(int idsp, int idkh);
+        bool CheckYT(int makh, int masp);
     }
     public class YeuThichSvc : IYeuThich
     {
@@ -22,11 +22,24 @@ namespace R4Clothes.Shared.Services
         {
             _context = context;
         }
-        public async Task<List<YeuThich>> DanhSachYeuThichTheoID(int id)
+
+        public bool CheckYT(int makh, int masp)
         {
-            List<YeuThich> ls = new List<YeuThich>();
-            ls = await _context.YeuThichs.Where(t => t.Makhachhang == id).ToListAsync();
-            return ls;
+            bool flag = false;
+            List<YeuThich> lsyt = _context.YeuThichs.Where(m => m.Makhachhang == makh).ToList();
+            for (int i = 0; i < lsyt.Count; i++)
+            {
+                if (lsyt[i].Makhachhang == makh && lsyt[i].Masanpham == masp)
+                {
+                    flag = true;
+                    break;
+                }
+                else
+                {
+                    flag = false;
+                }
+            }
+            return flag;
         }
 
         public async Task<YeuThich> ThemYeuThich(YeuThich yeuthich)
@@ -36,18 +49,25 @@ namespace R4Clothes.Shared.Services
             return yeuthich;
         }
 
-        public async Task<bool> XoaYeuThich(int id)
+        public async Task<bool> XoaYeuThich(int idsp, int idkh)
         {
-            YeuThich yt = new YeuThich();
-            yt = _context.YeuThichs.Find(id);
-            if (yt != null)
+            bool flag = false;
+            var ls = await _context.YeuThichs.Where(sp => sp.Masanpham == idsp).ToListAsync();
+            for (int i = 0; i < ls.Count; i++)
             {
-                _context.Remove(id);
-                await _context.SaveChangesAsync();
-                return true;
+                if (ls[i].Makhachhang == idkh)
+                {
+                    _context.Remove(ls[i]);
+                    await _context.SaveChangesAsync();
+                    flag = true;
+                    break;
+                }
+                else
+                {
+                    flag = false;
+                }
             }
-            else
-                return false;
+            return flag;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace R4Clothes.Shared.Helpers
                 //  NetworkCredential cred = new NetworkCredential("driverhuyhoa@gmail.com","01635592943");
                 MailMessage Msg = new MailMessage();
                 //sender email address
-                Msg.From = new MailAddress("phamhuyhoalk20@gmail.com");
+                Msg.From = new MailAddress("r4.clothes1@gmail.com");
                 //Recipient e-mail address
                 Msg.To.Add(emailnguoinhan);
                 //Assign the subject  of out message
@@ -30,7 +30,7 @@ namespace R4Clothes.Shared.Helpers
 
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
-                    smtp.Credentials = new NetworkCredential("phamhuyhoalk20@gmail.com", "01635592943");
+                    smtp.Credentials = new NetworkCredential("r4.clothes1@gmail.com", "R4Clothes");
                     smtp.EnableSsl = true;
                     smtp.Send(Msg);
                 }

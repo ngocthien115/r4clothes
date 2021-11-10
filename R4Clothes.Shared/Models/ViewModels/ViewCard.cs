@@ -16,8 +16,7 @@ namespace R4Clothes.Shared.Models.ViewModels
     public class CartItem
     {
         public SanPham SanPham { get; set; }
-        public int Trangthai { get; set; }
-        public double Sotien { get; set; }
+        public int Soluong { get; set; }
     }
     public class ViewCart
     {

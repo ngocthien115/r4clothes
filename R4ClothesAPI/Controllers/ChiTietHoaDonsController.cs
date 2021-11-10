@@ -15,35 +15,17 @@ namespace R4ClothesAPI.Controllers
     [ApiController]
     public class ChiTietHoaDonsController : ControllerBase
     {
-        private readonly ChiTietHoaDonSvc _chiTietHoaDonSvc;
-        private readonly HoaDonSvc _hoaDonSvc;
-
-        public ChiTietHoaDonsController(ChiTietHoaDonSvc chiTietHoaDonSvc ,HoaDonSvc hoaDonSvc )
+        protected IChiTietHoaDon _chiTietHoaDonSvc;
+        public ChiTietHoaDonsController(IChiTietHoaDon chiTietHoaDonSvc)
         {
             _chiTietHoaDonSvc = chiTietHoaDonSvc;
-            _hoaDonSvc = hoaDonSvc;
         }
 
-        // GET: api/ChiTietHoaDons
-        
-        //public async Task<ActionResult<IEnumerable<ChiTietHoaDon>>> GetChiTietHoaDons()
-        //{
-        //    return await _context.ChiTietHoaDons.ToListAsync();
-        //}
-
         // GET: api/ChiTietHoaDons/5
-        [HttpGet("{id}")]
-        public List<ViewDetails> GetChiTiet(int id)
+        [HttpGet("/api/chitiethoadons/hoadon/{id}")]
+        public List<SanPhamCT> GetChiTiet(int id)
         {
            return _chiTietHoaDonSvc.GetChiTiet(id);
         }
-      
-            // PUT: api/ChiTietHoaDons/5
-            // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-
-            //private bool ChiTietHoaDonExists(int id)
-            //{
-            //    return _context.ChiTietHoaDons.Any(e => e.MaChiTietHoaDon == id);
-            //}
-        }
+    }
 }

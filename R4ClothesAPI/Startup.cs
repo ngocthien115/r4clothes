@@ -90,13 +90,16 @@ namespace R4ClothesAPI
             services.AddTransient<IRandomStringHelper, RandomStringHelper>();
             services.AddTransient<ISendMailHelper, SendMailSvc>();
 
+            services.AddTransient<IChiTietHoaDon, ChiTietHoaDonSvc>();
             services.AddTransient<ISanPham, SanPhamSvc>();
             services.AddTransient<IHoaDon, HoaDonSvc>();
-            services.AddTransient<IChiTietHoaDon, ChiTietHoaDonSvc>();
             services.AddTransient<IQuanTri, QuanTriSvc>();
             services.AddTransient<IKhachHang, KhachHangSvc>();
             services.AddTransient<ILoaiSanPham, LoaiSanPhamSvc>();
             services.AddTransient<IDanhGiaSanPham, DanhGiaSanPhamSvc>();
+            services.AddTransient<IYeuThich, YeuThichSvc>();
+            services.AddTransient<IThongKe, ThongKeSvc>();
+
 
             services.AddSwaggerGen(c =>
             {

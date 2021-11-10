@@ -42,16 +42,16 @@ namespace R4Clothes.Shared.Models
 
         [StringLength(100)]
         [Display(Name = "Hình")]
-        public string Hinh { get; set; }
+        public string? Hinh { get; set; }
 
         [Display(Name = "Trạng thái")]
-        public bool Trangthai { get; set; }
+        public bool? Trangthai { get; set; } = true;
 
         [Display(Name = "Mật khẩu")]
         [Column(TypeName = "varchar")]
         [StringLength(50)]
         [DataType(DataType.Password)]
-        [Required]
+        [Required(ErrorMessage = "Bạn cần nhập mật khẩu")]
         public string Matkhau { get; set; }
     }
 }

@@ -20,26 +20,19 @@ namespace R4ClothesAPI.Controllers
             _khachhangSvc = khachHang;
         }
 
-        // GET: api/khachhangs
-        [HttpGet]
-        public async Task<List<KhachHang>> DSKH()
-        {
-            return await _khachhangSvc.DanhSachKhachHang();
-            
-        }
-
         // POST: api/KhachHangs
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<KhachHang> PostKhachHang([FromBody] KhachHang khachhang)
+        public async Task<IActionResult> PostKhachHang([FromBody] KhachHang khachhang)
         {
             if (khachhang != null)
             {
-                return await _khachhangSvc.AddKhachhang(khachhang);
+                await _khachhangSvc.AddKhachhang(khachhang);
+                return Ok("Đã thêm thành công");
             }
             else
             {
-                return khachhang = null;
+                return BadRequest("Thêm thất bại");
             }
         }
 
@@ -52,18 +45,28 @@ namespace R4ClothesAPI.Controllers
 
         // PUT: api/Khachhangs/5
         [HttpPut("{id}")]
-        public async Task<KhachHang> ChinhSuaKH(int id, [FromBody] KhachHang kh)
+        public async Task<IActionResult> ChinhSuaKH(int id, [FromBody] KhachHang kh)
         {
-            return await _khachhangSvc.SuaKhachhang(id, kh);
+            if (await _khachhangSvc.SuaKhachhang(id, kh) != null)
+            {
+                return Ok("Đã sửa thành công");
+            }
+            else
+            {
+                return NotFound("Lỗi khi sửa");
+            }
         }
 
-        // DELETE: api/Khachhangs/5
-        [HttpDelete("{id}")]
-        public bool ChinhSuaKH(int id)
+        [HttpPost("quenmatkhau")]
+        public Task<bool> QuenMatKhau(string email)
         {
-            return _khachhangSvc.XoaKhachHang(id);             
+            return _khachhangSvc.QuenMatKhau(email);
         }
 
-        
+        [HttpPost("doimatkhau")]
+        public Task<bool> DoiMatKhau(int idkhachhang, string oldpwd, string newpwd)
+        {
+            return _khachhangSvc.DoiMatKhau(idkhachhang, oldpwd, newpwd);
+        }
     }
 }

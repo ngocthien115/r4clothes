@@ -73,15 +73,6 @@ namespace R4ClothesAPI.Controllers
         {
             return _khachhangSvc.Login(loginKH);
         }
-        [HttpGet]
-        public Task<bool> QuenMatKhau(string email)
-        {
-            return _khachhangSvc.QuenMatKhau(email);
-        }
-        [HttpPut]
-        public Task<bool> DoiMatKhau(int idkhachhang, string oldpwd, string newpwd)
-        {
-            return _khachhangSvc.DoiMatKhau(idkhachhang,oldpwd,newpwd);
-        }
+        
     }
 }

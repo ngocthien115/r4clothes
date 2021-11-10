@@ -39,10 +39,19 @@ namespace R4Clothes.Shared.Services
 
         public async Task<KhachHang> AddKhachhang(KhachHang khachhang)
         {
-            khachhang.Makhachhang = 0;
-            _context.Add(khachhang);
-            await _context.SaveChangesAsync();
-            return khachhang;
+            try
+            {
+                khachhang.Makhachhang = 0;
+                khachhang.Matkhau = _mahoa.Mahoa(khachhang.Matkhau);
+                _context.Add(khachhang);
+                await _context.SaveChangesAsync();
+                return khachhang;
+            }
+            catch (Exception)
+            {
+                return khachhang = null;
+            }
+            
         }
 
         public async Task<List<KhachHang>> DanhSachKhachHang()
@@ -109,7 +118,8 @@ namespace R4Clothes.Shared.Services
                     _sendmail.SendMail(email, body, subject);
 
                     kh.Matkhau = _mahoa.Mahoa(newpwd);
-                    await SuaKhachhang(kh.Makhachhang, kh);
+                    _context.KhachHangs.Update(kh);
+                    await _context.SaveChangesAsync();
                     return true;
                 }
                 else
@@ -123,34 +133,25 @@ namespace R4Clothes.Shared.Services
 
         public async Task<KhachHang> SuaKhachhang(int id, KhachHang khachhang)
         {
-            //khachhang.Makhachhang = id;
-            //KhachHang kh = await GetKhachhang(id);           
-            //if (khachhang.Matkhau == "0")
-            //{
-            //    khachhang.Matkhau = kh.Matkhau;
-            //}
-            //khachhang.Matkhau = _mahoa.Mahoa(khachhang.Matkhau);
-            //_context.KhachHangs.Update(khachhang);
-            //_context.KhachHangs.Update(khachhang);
-
-            KhachHang kh = null;
-            kh = _context.KhachHangs.Find(id);
-            kh.Tenkhachhang = khachhang.Tenkhachhang;
-            kh.Diachi = khachhang.Diachi;
-            kh.Email = khachhang.Email;
-            kh.Gioitinh = khachhang.Gioitinh;
-            kh.Hinh = khachhang.Hinh;
-            kh.Ngaysinh = khachhang.Ngaysinh;
-            kh.Sodienthoai = khachhang.Sodienthoai;
-            kh.Trangthai = khachhang.Trangthai;
-            if (kh.Matkhau != null)
+            try
             {
-                khachhang.Matkhau = _mahoa.Mahoa(khachhang.Matkhau);
-                kh.Matkhau = khachhang.Matkhau;
+                KhachHang kh = await GetKhachhang(id);
+                kh.Email = khachhang.Email;
+                kh.Diachi = khachhang.Diachi;
+                kh.Gioitinh = khachhang.Gioitinh;
+                kh.Ngaysinh = khachhang.Ngaysinh;
+                kh.Hinh = khachhang.Hinh;
+                kh.Tenkhachhang = khachhang.Tenkhachhang;
+
+                _context.Entry(kh).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return khachhang;
             }
-            _context.Update(kh);
-            await _context.SaveChangesAsync();
-            return khachhang;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return khachhang = null;
+            }
         }
 
         public bool XoaKhachHang(int id)
