@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using R4Clothes.Shared.Models;
 using R4Clothes.Shared.Services;
@@ -14,10 +15,14 @@ namespace R4ClothesAPI.Controllers
     public class SanphamsController : ControllerBase
     {
         protected ISanPham _sanPhamSvc;
-        public SanphamsController(ISanPham sanPhamSvc)
+        protected IChiaSe _chiaSeSvc;
+
+        public SanphamsController(ISanPham sanPhamSvc, IChiaSe chiaSeSvc)
         {
             _sanPhamSvc = sanPhamSvc;
+            _chiaSeSvc = chiaSeSvc;
         }
+
 
         /// <summary>
         /// Danh sách sản phẩm trong client
@@ -27,6 +32,13 @@ namespace R4ClothesAPI.Controllers
         public List<SanPham> GetSanPhamAll()
         {
             return _sanPhamSvc.DanhSachSanPham();
+        }
+
+        [Authorize(Roles ="User")]
+        [HttpPost("chiase")]
+        public bool ChiaSeSanPham(ChiaSe chiase)
+        {
+            return _chiaSeSvc.AddChiaSe(chiase);
         }
 
         [HttpGet("{id}")]

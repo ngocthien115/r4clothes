@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using R4Clothes.Shared.Models;
 using R4Clothes.Shared.Services;
 using System;
@@ -28,6 +29,7 @@ namespace R4ClothesAPI.Controllers
 
         // POST api/<DanhGiaSanPhamsController>
         [HttpPost]
+        [Authorize(Roles ="User")]
         public async Task<DanhGiaSanPham> Post([FromBody] DanhGiaSanPham danhgiasanpham)
         {
             if (danhgiasanpham != null)

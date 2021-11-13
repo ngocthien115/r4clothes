@@ -12,7 +12,7 @@ namespace R4Clothes.Shared.Services
 {
     public interface IKhachHang
     {
-        KhachHang Login(LoginKH loginKH);
+        KhachHang Login(Login loginKH);
         Task<bool> QuenMatKhau(string emailkh);
         Task<bool> DoiMatKhau(int idkhachhang, string oldpwd, string newpwd);
         Task<List<KhachHang>> DanhSachKhachHang();
@@ -96,10 +96,10 @@ namespace R4Clothes.Shared.Services
                 return false;
         }
 
-        public KhachHang Login(LoginKH loginKH)
+        public KhachHang Login(Login loginKH)
         {
             var u = _context.KhachHangs.Where(
-                p => p.Email.Equals(loginKH.Email)
+                p => p.Email.Equals(loginKH.User)
                 && p.Matkhau.Equals(_mahoa.Mahoa(loginKH.Password))
                ).FirstOrDefault();
             return u;

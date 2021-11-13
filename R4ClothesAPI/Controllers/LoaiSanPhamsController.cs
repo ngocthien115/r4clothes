@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using R4Clothes.Shared.Models;
 using R4Clothes.Shared.Services;
 using System;
@@ -12,8 +13,10 @@ namespace R4ClothesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class LoaiSanPhamsController : ControllerBase
     {
+
         private ILoaiSanPham _loaisanphamSvc;
         public LoaiSanPhamsController(ILoaiSanPham loaisanphamSvc)
         {

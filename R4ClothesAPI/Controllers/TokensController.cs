@@ -21,58 +21,75 @@ namespace R4ClothesAPI.Controllers
     {
         public IKhachHang _khachhangSvc;
         public IConfiguration _configuration;
-        public TokensController(IConfiguration configuration, IKhachHang khachHang)
+        protected IQuanTri _quanTriSvc;
+
+        public TokensController(IKhachHang khachhangSvc, IConfiguration configuration, IQuanTri quanTriSvc)
         {
-            _khachhangSvc = khachHang;
+            _khachhangSvc = khachhangSvc;
             _configuration = configuration;
+            _quanTriSvc = quanTriSvc;
         }
-        //[HttpPost]
-        //public IActionResult Login(LoginKH loginKH)
-        //{
-        //    if (loginKH != null && !string.IsNullOrEmpty(loginKH.Email)
-        //        && !string.IsNullOrEmpty(loginKH.Password))
-        //    {
-        //        var khachhang = _khachhangSvc.Login(loginKH);
-        //        if (khachhang != null)
-        //        {
-        //            if (khachhang != null)
-        //            {
-        //                //create claims details based on the user information
-        //                var claims = new[] {
-        //                    new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
-        //                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        //                    new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
 
-        //                    new Claim("Id", khachhang.Makhachhang.ToString()),
-        //                    new Claim("FullName", khachhang.Tenkhachhang),
-        //                    new Claim("Email", khachhang.Email)
-        //                };
-
-        //                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
-        //                var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-        //                var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Audience"],
-        //                    claims, expires: DateTime.UtcNow.AddDays(1), signingCredentials: signIn);
-
-        //                ViewToken viewToken = new ViewToken() { Token = new JwtSecurityTokenHandler().WriteToken(token), KhachhangId = khachhang.Makhachhang };
-        //                return Ok(viewToken);
-        //            }
-        //            else
-        //            {
-        //                return BadRequest("Invalid credentials");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            return BadRequest();
-        //        }
-        //    }
-        //    return BadRequest();
-        //}
         [HttpPost]
-        public KhachHang Login(LoginKH loginKH)
+        public IActionResult Login(Login login)
         {
-            return _khachhangSvc.Login(loginKH);
+            if (login != null && !string.IsNullOrEmpty(login.User)
+                && !string.IsNullOrEmpty(login.Password))
+            {
+                var dangnhap = _khachhangSvc.Login(login);
+                if (dangnhap != null)
+                {
+                    var claims = new[] {
+                            new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+
+                            new Claim("Id", dangnhap.Makhachhang.ToString()),
+                            new Claim("FullName", dangnhap.Tenkhachhang),
+                            new Claim("Email", dangnhap.Email),
+                            new Claim(ClaimTypes.Role, "User")
+                        };
+
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                    var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                    var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Audience"],
+                        claims, expires: DateTime.UtcNow.AddDays(1), signingCredentials: signIn);
+
+                    ViewToken viewToken = new ViewToken() { Token = new JwtSecurityTokenHandler().WriteToken(token), KhachhangId = dangnhap.Makhachhang };
+                    return Ok(viewToken);
+                }
+                else
+                {
+                    var admin = _quanTriSvc.Login(login);
+                    if (admin != null)
+                    {
+                        var claims = new[] {
+                            new Claim(JwtRegisteredClaimNames.Sub, _configuration["Jwt:Subject"]),
+                            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                            new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+
+                            new Claim("Id", admin.Maquantri.ToString()),
+                            new Claim("FullName", admin.Hoten),
+                            new Claim("Taikhoan", admin.Taikhoan),
+                            new Claim(ClaimTypes.Role, "Admin")
+                        };
+
+                        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                        var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                        var token = new JwtSecurityToken(_configuration["Jwt:Issuer"], _configuration["Jwt:Audience"],
+                            claims, expires: DateTime.UtcNow.AddDays(1), signingCredentials: signIn);
+
+                        ViewToken viewToken = new ViewToken() { Token = new JwtSecurityTokenHandler().WriteToken(token), KhachhangId = admin.Maquantri };
+                        return Ok(viewToken);
+                    }
+                    else
+                    {
+                        return BadRequest("Invalid credentials");
+                    }
+                }
+            }
+            return BadRequest();
         }
-        
+
     }
 }
