@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace R4ClothesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class QuanTrisController : ControllerBase
     {
         private readonly IQuanTri _quanTriSvc;
@@ -116,6 +118,12 @@ namespace R4ClothesAPI.Controllers
         public List<SanPham> DSSP()
         {
             return _sanPhamSvc.DanhSachSanPhamAdmin();
+        }
+
+        [HttpPost("sanpham/add")]
+        public async Task<SanPham> ThemSanPham([FromBody] SanPham sanpham)
+        {
+            return await _sanPhamSvc.AddSanPham(sanpham);
         }
 
         [HttpPost("sanpham/edit")]

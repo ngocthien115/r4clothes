@@ -34,51 +34,21 @@ namespace R4ClothesAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            #region fix loi Json loop
-            //services.AddControllers()
-            //    .AddJsonOptions(o => o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.RequireHttpsMetadata = false;
-            //        options.SaveToken = true;
-            //        options.RequireHttpsMetadata = false;
-            //        options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-            //        {
-            //            ValidateIssuer = true,
-            //            ValidateAudience = true,
-            //            ValidAudience = Configuration["Jwt:Audience"],
-            //            ValidIssuer = Configuration["Jwt:Issuer"],
-            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-            //        };
-            //    });
-
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ASM.API", Version = "v1" });
-            //    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            //    {
-            //        In = ParameterLocation.Header,
-            //        Description = "Please insert JWT with Bearer into field",
-            //        Name = "Authorization",
-            //        Type = SecuritySchemeType.ApiKey
-            //    });
-            //    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
-            //       {
-            //         new OpenApiSecurityScheme
-            //         {
-            //           Reference = new OpenApiReference
-            //           {
-            //             Type = ReferenceType.SecurityScheme,
-            //             Id = "Bearer"
-            //           }
-            //          },
-            //          new string[] { }
-            //        }
-            //      });
-            //});
-            #endregion
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.RequireHttpsMetadata = false;
+                    options.SaveToken = true;
+                    options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
 
 
             services.AddDbContextPool<DataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")
@@ -120,7 +90,7 @@ namespace R4ClothesAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

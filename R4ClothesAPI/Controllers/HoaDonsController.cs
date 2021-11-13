@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace R4ClothesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="User")]
     public class HoaDonsController : ControllerBase
     {
         private IHoaDon _hoadonSvc;
@@ -33,6 +35,7 @@ namespace R4ClothesAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("/api/hoadon/{id}")]
+        [Authorize(Roles ="User,Admin")]
         public HoaDon GetHoaDon(int id)
         {
             return _hoadonSvc.GetHoaDon(id);
