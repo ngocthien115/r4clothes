@@ -15,7 +15,9 @@ using R4Clothes.Shared.Models;
 using R4Clothes.Shared.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -69,11 +71,15 @@ namespace R4ClothesAPI
             services.AddTransient<IDanhGiaSanPham, DanhGiaSanPhamSvc>();
             services.AddTransient<IYeuThich, YeuThichSvc>();
             services.AddTransient<IThongKe, ThongKeSvc>();
+            services.AddTransient<IChiaSe, ChiaSeSvc>();
 
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "R4ClothesAPI", Version = "v1" });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 

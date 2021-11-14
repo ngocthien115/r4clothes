@@ -127,18 +127,10 @@ namespace R4Clothes.Shared.Services
         }
         public bool GiamSL(int idsp, int sl)
         {
-            var sp = new SanPham();
-            sp = _context.SanPhams.Find(idsp);
-            if (sp != null)
-            {
-                sp.Soluong -= sl;
-                _context.SaveChanges();
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            SanPham sp = _context.SanPhams.Find(idsp);
+            sp.Soluong -= sl;
+            _context.SaveChanges();
+            return true;
         }
         public async Task<bool> XoaSanPham(int id)
         {

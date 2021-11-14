@@ -1,17 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using R4Clothes.Shared.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using R4Clothes.Shared.Models.ViewModels;
-using System.Security.Claims;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
+using R4Clothes.Shared.Models.ViewModels;
+using R4Clothes.Shared.Services;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
-using R4Clothes.Shared.Models;
 
 namespace R4ClothesAPI.Controllers
 {
@@ -30,6 +25,11 @@ namespace R4ClothesAPI.Controllers
             _quanTriSvc = quanTriSvc;
         }
 
+        /// <summary>
+        /// Lấy token(Đăng nhập)
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Login(Login login)
         {
@@ -90,6 +90,5 @@ namespace R4ClothesAPI.Controllers
             }
             return BadRequest();
         }
-
     }
 }
