@@ -1,0 +1,1 @@
+Vào Properties R4ClothesAPI -> Build -> XML Documentation file, sửa lại đường dẫn đến file R4ClothesAPI.xml trong file R4ClothesAPI

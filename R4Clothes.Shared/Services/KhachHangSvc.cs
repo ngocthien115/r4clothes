@@ -21,6 +21,7 @@ namespace R4Clothes.Shared.Services
         Task<KhachHang> SuaKhachhang(int id, KhachHang khachhang);
         bool XoaKhachHang(int id);
         bool isExist(string email);
+        Task<bool> ThayDoiTrangThai(int idkhachhang, bool trangthai);
     }
     public class KhachHangSvc : IKhachHang
     {
@@ -41,11 +42,11 @@ namespace R4Clothes.Shared.Services
         {
             try
             {
-                khachhang.Makhachhang = 0;
-                khachhang.Matkhau = _mahoa.Mahoa(khachhang.Matkhau);
-                _context.Add(khachhang);
-                await _context.SaveChangesAsync();
-                return khachhang;
+                    khachhang.Makhachhang = 0;
+                    khachhang.Matkhau = _mahoa.Mahoa(khachhang.Matkhau);
+                    _context.Add(khachhang);
+                    await _context.SaveChangesAsync();
+                    return khachhang;
             }
             catch (Exception)
             {
@@ -87,7 +88,7 @@ namespace R4Clothes.Shared.Services
 
         public bool isExist(string email)
         {
-            var kh = _context.KhachHangs.Where(e => e.Email == email);
+            KhachHang kh = _context.KhachHangs.Where(e => e.Email == email).FirstOrDefault();
             if (kh != null)
             {
                 return true;
@@ -153,7 +154,23 @@ namespace R4Clothes.Shared.Services
                 return khachhang = null;
             }
         }
-
+        public async Task<bool> ThayDoiTrangThai(int idkhachhang, bool trangthai)
+        {
+            try
+            {
+                KhachHang kha = await GetKhachhang(idkhachhang);
+                kha.Trangthai = trangthai;
+                _context.Entry(kha).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+        
         public bool XoaKhachHang(int id)
         {
             KhachHang kh = _context.KhachHangs.Find(id);

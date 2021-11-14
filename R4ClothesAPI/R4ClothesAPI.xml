@@ -1,0 +1,463 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>R4ClothesAPI</name>
+    </assembly>
+    <members>
+        <member name="M:R4ClothesAPI.Controllers.ChiTietHoaDonsController.GetChiTiet(System.Int32)">
+            <summary>
+            Danh sách sản phẩm trong hóa đơn
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.DanhGiaSanPhamsController.DanhGiaSanPhamTheoIDSP(System.Int32)">
+            <summary>
+            Danh sách đánh giá một sản phẩm
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.DanhGiaSanPhamsController.Post(R4Clothes.Shared.Models.DanhGiaSanPham)">
+            <summary>
+            Đánh giá 1 sản phẩm
+            </summary>
+            <remarks>
+            Dữ liệu mẫu
+            Dữ liệu mẫu
+            
+                {
+                  "maDanhGiaSanPham": 0,
+                  "makhachhang": 0,
+                  "masanpham": 0,
+                  "thoigian": "2021-11-14T14:13:26.692Z",
+                  "noidung": "string"
+                }
+            </remarks>
+            <param name="danhgiasanpham"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.HoaDonsController.GetHoaDon(System.Int32)">
+            <summary>
+            Lấy thông tin của hóa đơn theo ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.HoaDonsController.DSDHByKH(System.Int32)">
+            <summary>
+            Lấy danh sách hóa đơn theo khách hàng
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.HoaDonsController.PostCart(R4Clothes.Shared.Models.ViewModels.Cart)">
+             <summary>
+             Đặt hàng(Thêm 1 đơn hàng)
+             </summary>
+             <remarks>
+                 Dữ liệu mẫu
+            
+                     {
+                       "makhachhang": 1,
+                       "listViewCart": [
+                         {
+                     	    "sanPham": {
+                     	        "masanpham": 2,
+                     	        "maquantri": 1,
+                     	        "tensanpham": "Áo test 1",
+                     	        "maloai": 1,
+                     	        "soluong": 10,
+                     	        "gia": 15000,
+                     	        "hinh": "string",
+                     	        "soluotxem": 0,
+                     	        "ngaynhap": "2021-11-14T11:24:42.714",
+                     	        "giamgia": 0,
+                     	        "mota": "string",
+                     	        "trangthai": true,
+                     	        "dacbiet": true,
+                     	        "quanTris": null,
+                     	        "loaiSanPhams": null,
+                     	        "chiTietHoaDons": null
+                             },
+                             "soluong": 3
+                         },
+                         {
+                         "sanPham": {
+                             "masanpham": 1,
+                         	"maquantri": 1,
+                         	"tensanpham": "Áo test",
+                         	"maloai": 1,
+                         	"soluong": 10,
+                         	"gia": 15000,
+                         	"hinh": "string",
+                         	"soluotxem": 0,
+                         	"ngaynhap": "2021-11-14T11:24:42.714",
+                         	"giamgia": 0,
+                         	"mota": "string",
+                         	"trangthai": true,
+                         	"dacbiet": true,
+                         	"quanTris": null,
+                         	"loaiSanPhams": null,
+                         	"chiTietHoaDons": null
+                           },
+                           "soluong": 2
+                         }
+                       ],
+                       "tongtien": 225000
+                     }
+             </remarks>
+             <param name="GioHang"></param>
+             <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.KhachHangsController.PostKhachHang(R4Clothes.Shared.Models.KhachHang)">
+            <summary>
+            Thêm một khách hàng(Đăng ký)
+            </summary>
+            <param name="khachhang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.KhachHangsController.GetKhachhang(System.Int32)">
+            <summary>
+            Lấy thông tin 1 khách hàng
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.KhachHangsController.ChinhSuaKH(System.Int32,R4Clothes.Shared.Models.KhachHang)">
+            <summary>
+            Sửa khách hàng
+            </summary>
+            <param name="id"></param>
+            <param name="kh"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.KhachHangsController.QuenMatKhau(System.String)">
+            <summary>
+            Quên mật khẩu
+            </summary>
+            <param name="email"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.KhachHangsController.DoiMatKhau(System.Int32,System.String,System.String)">
+            <summary>
+            Đổi mật khẩu
+            </summary>
+            <param name="idkhachhang"></param>
+            <param name="oldpwd"></param>
+            <param name="newpwd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.LoaiSanPhamsController.GetDSloaiSP">
+            <summary>
+            Lấy danh sách loại sản phẩm
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.LoaiSanPhamsController.PostloaiSP(R4Clothes.Shared.Models.LoaiSanPham)">
+            <summary>
+            Thêm 1 loại sản phẩm
+            </summary>
+            <remarks>
+            Dữ liệu mẫu
+            
+                {
+                 "maloai": 0,
+                 "tenloai": "string",
+                }
+            </remarks>
+            <param name="loaisanpham"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.GetQuanTris">
+            <summary>
+            Lấy danh sách người quản trị
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.GetQuanTri(System.Int32)">
+            <summary>
+            Thông tin chi tiết của người quản trị theo ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.SuaQuanTri(System.Int32,R4Clothes.Shared.Models.QuanTri)">
+            <summary>
+            Sửa người quản trị
+            </summary>
+            <remarks>
+            Dữ liệu mẫu
+            
+                {
+                  "masanpham": 0,
+                  "maquantri": 0,
+                  "tensanpham": "string",
+                  "maloai": 0,
+                  "soluong": 0,
+                  "gia": 0,
+                  "hinh": "string",
+                  "soluotxem": 0,
+                  "ngaynhap": "2021-11-14T14:15:19.603Z",
+                  "giamgia": 0,
+                  "mota": "string",
+                  "trangthai": true,
+                  "dacbiet": true
+                }
+            </remarks>
+            <param name="id"></param>
+            <param name="quanTri"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.DoiMatKhau(System.Int32,System.String,System.String)">
+            <summary>
+            Đổi mật khẩu
+            </summary>
+            <param name="id"></param>
+            <param name="mkcu"></param>
+            <param name="newpwd"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.ThemQuanTri(R4Clothes.Shared.Models.QuanTri)">
+            <summary>
+            Thêm người quản trị
+            </summary>
+            <remarks>
+            Dữ liệu mẫu
+            
+                {
+                  "masanpham": 0,
+                  "maquantri": 0,
+                  "tensanpham": "string",
+                  "maloai": 0,
+                  "soluong": 0,
+                  "gia": 0,
+                  "hinh": "string",
+                  "soluotxem": 0,
+                  "ngaynhap": "2021-11-14T14:15:19.603Z",
+                  "giamgia": 0,
+                  "mota": "string",
+                  "trangthai": true,
+                  "dacbiet": true
+                }
+            </remarks>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.DSSP">
+            <summary>
+            Danh sách sản phẩm đầy đủ
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.ThemSanPham(R4Clothes.Shared.Models.SanPham)">
+            <summary>
+            Thêm mới sản phẩm
+            </summary>
+            <remarks>
+            Dữ liệu mẫu
+            
+                {
+                  "masanpham": 0,
+                  "maquantri": 1,
+                  "tensanpham": "Áo khoác XD",
+                  "maloai": 3,
+                  "soluong": 10,
+                  "gia": 15000,
+                  "hinh": "string",
+                  "soluotxem": 0,
+                  "ngaynhap": "2021-11-14T12:08:46.327Z",
+                  "giamgia": 0,
+                  "mota": "string",
+                  "trangthai": true,
+                  "dacbiet": true
+                }
+            </remarks>
+            <param name="sanpham"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.SuaSanPham(System.Int32,R4Clothes.Shared.Models.SanPham)">
+            <summary>
+            Sửa sản phẩm
+            </summary>
+            <remarks>
+            Dữ liệu mẫu
+            
+                {
+                  "masanpham": 0,
+                  "maquantri": 1,
+                  "tensanpham": "Áo khoác XD",
+                  "maloai": 3,
+                  "soluong": 10,
+                  "gia": 15000,
+                  "hinh": "string",
+                  "soluotxem": 0,
+                  "ngaynhap": "2021-11-14T12:08:46.327Z",
+                  "giamgia": 0,
+                  "mota": "string",
+                  "trangthai": true,
+                  "dacbiet": true
+                }
+            </remarks>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.GetAll">
+            <summary>
+            Lấy danh sách hóa đơn
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.SuaHoaDon(System.Int32,System.Int32,R4Clothes.Shared.Models.TrangthaiHD)">
+            <summary>
+            Sửa trạng thái hóa đơn
+            </summary>
+            <param name="idhd"></param>
+            <param name="nguoiql"></param>
+            <param name="tt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.DanhSachHoaDonTheoTT(R4Clothes.Shared.Models.TrangthaiHD)">
+            <summary>
+            Lấy danh sách hóa đơn theo trạng thái
+            </summary>
+            <param name="tt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.DanhSachKH">
+            <summary>
+            Lấy danh sách khách hàng
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.DeleteKH(System.Int32)">
+            <summary>
+            Xóa khách hàng theo ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.QuanTrisController.ThayDoiTT(System.Int32,System.Boolean)">
+            <summary>
+            Thay đổi trạng thái tài khoản khách hàng
+            </summary>
+            <param name="idkh"></param>
+            <param name="tt"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.SanphamsController.GetSanPhamAll">
+            <summary>
+            Danh sách sản phẩm trên trang chủ
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.SanphamsController.ChiaSeSanPham(R4Clothes.Shared.Models.ChiaSe)">
+            <summary>
+            Chia sẻ sản phẩm
+            </summary>
+            <remarks>
+            Dữ liệu mẫu
+            
+                {
+                  "maKhachHang": 1,
+                  "emailNguoiNhan": "nthien390@gmail.com",
+                  "maSanPham": 1,
+                  "hoTen": "ngocthien",
+                  "linkSP": "http://google.com/image1",
+                  "thoiGian": "2021-11-14T12:35:21.066Z"
+                }
+            </remarks>
+            <param name="chiase"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.SanphamsController.GetSanPham(System.Int32)">
+            <summary>
+            Thông tin chi tiết 1 sản phẩm theo ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.SanphamsController.SanPhamLienQuan(System.Int32)">
+            <summary>
+            Danh sách sản phẩm liên quan
+            </summary>
+            <param name="loaisp"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.SanphamsController.SanPhamDacBiet">
+            <summary>
+            Danh sách sản phẩm đặc biệt
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.SanphamsController.SanPhamGiamGIa(System.Int32)">
+            <summary>
+            Danh sách sản phẩm giảm giá
+            </summary>
+            <param name="giamgia"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.ThongKesController.Get">
+            <summary>
+            Danh sách khách hàng thân thiết
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.ThongKesController.GetDoanhthu(System.DateTime,System.DateTime)">
+            <summary>
+            Doanh thu cửa hàng
+            </summary>
+            <param name="from"></param>
+            <param name="to"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.ThongKesController.BanDuoc">
+            <summary>
+            Số lượng sản phẩm đã bán được
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.TokensController.Login(R4Clothes.Shared.Models.ViewModels.Login)">
+            <summary>
+            Lấy token(Đăng nhập)
+            </summary>
+            <param name="login"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.YeuThichsController.GetYeuThich(System.Int32)">
+            <summary>
+            Lấy danh sách yêu thích của khách hàng
+            </summary>
+            <param name="idkhachhang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.YeuThichsController.CheckYT(System.Int32,System.Int32)">
+            <summary>
+            Check yêu thích theo id khách hàng và id sản phẩm
+            </summary>
+            <param name="makhachhang"></param>
+            <param name="masanpham"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.YeuThichsController.ThemYT(R4Clothes.Shared.Models.YeuThich)">
+            <summary>
+            Thêm yêu thích
+            </summary>
+            <remarks>
+            Dữ liệu mẫu
+            
+                {
+                  "mayeuthich": 0,
+                  "makhachhang": 0,
+                  "masanpham": 0,
+                }
+            </remarks>
+            <param name="yeuthich"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.YeuThichsController.RemoveFav(System.Int32,System.Int32)">
+            <summary>
+            Xóa yêu thích
+            </summary>
+            <param name="masanpham"></param>
+            <param name="makhachhang"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

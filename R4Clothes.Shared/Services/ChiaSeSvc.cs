@@ -37,6 +37,8 @@ namespace R4Clothes.Shared.Services
                 var body = "Chào " + chiaSe.EmailNguoiNhan + ", một người bạn của bạn tên " + khachHang.Tenkhachhang + " đã đề xuất " + sanpham.Tensanpham + " với bạn. " +
                     "Truy cập vào link bên dưới để có thêm thông tin. " + chiaSe.LinkSP;
                 _sendmail.SendMail(chiaSe.EmailNguoiNhan, body, subject);
+                _context.ChiaSes.Add(chiaSe);
+                _context.SaveChanges();
                 ret = true;
             }
             catch (Exception)
