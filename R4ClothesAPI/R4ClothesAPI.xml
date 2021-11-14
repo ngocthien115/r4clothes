@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>R4ClothesAPI</name>
+    </assembly>
+    <members>
+        <member name="M:R4ClothesAPI.Controllers.HoaDonsController.GetHoaDon(System.Int32)">
+            <summary>
+            Lấy thông tin 1 hóa đơn
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.HoaDonsController.DSDHByKH(System.Int32)">
+            <summary>
+            Danh sách hóa đơn theo khách hàng
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.HoaDonsController.PostCart(R4Clothes.Shared.Models.ViewModels.Cart)">
+            <summary>
+            Thêm hóa đơn mới
+            </summary>
+            <param name="GioHang"></param>
+            <returns></returns>
+        </member>
+        <member name="M:R4ClothesAPI.Controllers.SanphamsController.GetSanPhamAll">
+            <summary>
+            Danh sách sản phẩm trong client
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
