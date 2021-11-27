@@ -27,7 +27,7 @@ namespace R4ClothesAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("/api/hoadon/{id}")]
+        [HttpGet("{id}")]
         public HoaDon GetHoaDon(int id)
         {
             return _hoadonSvc.GetHoaDon(id);
@@ -38,7 +38,7 @@ namespace R4ClothesAPI.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("/api/hoadon/khachhang/{id}")]
+        [HttpGet("/api/hoadons/khachhang/{id}")]
         public List<HoaDon> DSDHByKH(int id)
         {
             return _hoadonSvc.DanhSachHoaDonTheoKhachHang(id);

@@ -73,6 +73,13 @@ namespace R4ClothesAPI
             services.AddTransient<IThongKe, ThongKeSvc>();
             services.AddTransient<IChiaSe, ChiaSeSvc>();
 
+            services.AddCors(options => options.AddPolicy(
+                "_mypolicy", builder =>
+                builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                )
+             );
 
             services.AddSwaggerGen(c =>
             {
@@ -92,6 +99,9 @@ namespace R4ClothesAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "R4ClothesAPI v1"));
             }
+
+            app.UseCors();
+            app.UseCors("_mypolicy");
 
             app.UseHttpsRedirection();
 
