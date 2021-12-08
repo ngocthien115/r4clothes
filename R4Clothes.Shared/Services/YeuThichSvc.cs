@@ -44,9 +44,16 @@ namespace R4Clothes.Shared.Services
 
         public async Task<YeuThich> ThemYeuThich(YeuThich yeuthich)
         {
-            _context.YeuThichs.Add(yeuthich);
-            await _context.SaveChangesAsync();
-            return yeuthich;
+            if (CheckYT(yeuthich.Makhachhang, yeuthich.Masanpham))
+            {
+                return yeuthich;
+            }
+            else
+            {
+                _context.YeuThichs.Add(yeuthich);   
+                await _context.SaveChangesAsync();
+                return yeuthich;
+            }
         }
 
         public async Task<bool> XoaYeuThich(int idsp, int idkh)

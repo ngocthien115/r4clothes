@@ -31,4 +31,5 @@ namespace R4Clothes.Shared.Models
         public KhachHang KhachHang { get; set; }
         public SanPham SanPham { get; set; }
     }
+    
 }

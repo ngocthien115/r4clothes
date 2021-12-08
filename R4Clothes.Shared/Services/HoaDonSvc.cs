@@ -59,11 +59,7 @@ namespace R4Clothes.Shared.Services
         public HoaDon GetHoaDon(int id)
         {
             HoaDon hoadon = null;
-            hoadon = _context.HoaDons.Where(x => x.Mahoadon == id)
-                .Include(x => x.KhachHang)
-                .Include(x => x.ChiTietHoaDons).ThenInclude(y => y.SanPham)
-                .FirstOrDefault();
-            //product = _context.Products.Where(e=>e.Id==id).FirstOrDefault(); //cách tổng quát
+            hoadon = _context.HoaDons.Where(e=>e.Mahoadon == id).FirstOrDefault(); //cách tổng quát
             return hoadon;
         }
 
