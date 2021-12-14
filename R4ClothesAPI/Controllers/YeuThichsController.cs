@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using R4Clothes.Shared.Models;
 using R4Clothes.Shared.Services;
 using System;
@@ -9,6 +10,7 @@ namespace R4ClothesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "User")]
     public class YeuThichsController : ControllerBase
     {
         private readonly IYeuThich _yeuThichSvc;

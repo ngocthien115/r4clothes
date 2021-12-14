@@ -3,6 +3,8 @@ using R4Clothes.Shared.Models;
 using R4Clothes.Shared.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using R4Clothes.Shared.Models.ViewModels;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,6 +12,7 @@ namespace R4ClothesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "User, Admin")]
     public class DanhGiaSanPhamsController : ControllerBase
     {
         private IDanhGiaSanPham _danhgiasanpham;
@@ -25,7 +28,8 @@ namespace R4ClothesAPI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<List<DanhGiaSanPham>> DanhGiaSanPhamTheoIDSP(int id)
+        [AllowAnonymous]
+        public async Task<List<DanhGiaSanPhamReturn>> DanhGiaSanPhamTheoIDSP(int id)
         {
             return await _danhgiasanpham.DanhGiaSanPhamTheoIDSP(id);
         }

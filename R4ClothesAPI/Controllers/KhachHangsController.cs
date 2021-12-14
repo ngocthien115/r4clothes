@@ -8,6 +8,7 @@ namespace R4ClothesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "User, Admin")]
     public class KhachHangsController : ControllerBase
     {
         private IKhachHang _khachhangSvc;
@@ -79,6 +80,7 @@ namespace R4ClothesAPI.Controllers
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost("quenmatkhau")]
         public Task<bool> QuenMatKhau(string email)
         {

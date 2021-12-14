@@ -4,11 +4,13 @@ using R4Clothes.Shared.Models;
 using R4Clothes.Shared.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace R4ClothesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class QuanTrisController : ControllerBase
     {
         private readonly IQuanTri _quanTriSvc;
@@ -131,7 +133,6 @@ namespace R4ClothesAPI.Controllers
                 return BadRequest("Lỗi");
             }
         }
-
         /// <summary>
         /// Thêm người quản trị
         /// </summary>
@@ -235,7 +236,6 @@ namespace R4ClothesAPI.Controllers
         {
             return await _sanPhamSvc.SuaSanPham(idsp, sp);
         }
-
         /// <summary>
         /// Lấy danh sách hóa đơn
         /// </summary>

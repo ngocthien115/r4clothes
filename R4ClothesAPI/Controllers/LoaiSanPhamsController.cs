@@ -3,13 +3,14 @@ using R4Clothes.Shared.Models;
 using R4Clothes.Shared.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using Microsoft.AspNetCore.Authorization;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace R4ClothesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class LoaiSanPhamsController : ControllerBase
     {
         private ILoaiSanPham _loaisanphamSvc;

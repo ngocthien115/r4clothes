@@ -4,11 +4,13 @@ using R4Clothes.Shared.Models.ViewModels;
 using R4Clothes.Shared.Services;
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace R4ClothesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "User, Admin")]
     public class HoaDonsController : ControllerBase
     {
         private IHoaDon _hoadonSvc;

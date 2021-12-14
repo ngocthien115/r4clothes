@@ -2,6 +2,7 @@
 using R4Clothes.Shared.Models;
 using R4Clothes.Shared.Services;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace R4ClothesAPI.Controllers
 {
@@ -45,7 +46,7 @@ namespace R4ClothesAPI.Controllers
         /// </remarks>
         /// <param name="chiase"></param>
         /// <returns></returns>
-        //[Authorize(Roles ="User")]
+        [Authorize(Roles ="User")]
         [HttpPost("chiase")]
         public bool ChiaSeSanPham(ChiaSe chiase)
         {
