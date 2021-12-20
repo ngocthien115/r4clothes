@@ -49,7 +49,7 @@ namespace R4Clothes.Shared.Services
                                           TenSanPham = sp.Tensanpham,
                                           Gia = sp.Gia,
                                           Hinh = sp.Hinh,
-                                          SoLuongMua = ct.Soluong,
+                                          SoLuongMua = ct.Soluong
                                       }).ToList();
             return danhsach;
         }
