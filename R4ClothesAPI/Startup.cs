@@ -78,6 +78,7 @@ namespace R4ClothesAPI
                 builder.AllowAnyOrigin()
                         .AllowAnyMethod()
                         .AllowAnyHeader()
+                        .WithExposedHeaders("soluongtrang")
                 )
              );
 

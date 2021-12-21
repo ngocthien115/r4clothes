@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using R4Clothes.Shared.Models;
+using R4Clothes.Shared.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

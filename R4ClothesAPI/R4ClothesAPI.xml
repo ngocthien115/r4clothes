@@ -341,7 +341,7 @@
             <param name="tt"></param>
             <returns></returns>
         </member>
-        <member name="M:R4ClothesAPI.Controllers.SanphamsController.GetSanPhamAll">
+        <member name="M:R4ClothesAPI.Controllers.SanphamsController.GetSanPhamAll(R4Clothes.Shared.Models.ViewModels.Pagination)">
             <summary>
             Danh sách sản phẩm trên trang chủ
             </summary>

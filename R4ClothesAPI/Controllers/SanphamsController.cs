@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using R4Clothes.Shared.Models;
 using R4Clothes.Shared.Services;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
+using R4Clothes.Shared.Models.ViewModels;
+using R4Clothes.Shared.Helpers;
+using R4Clothes.Shared.Models;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace R4ClothesAPI.Controllers
 {
@@ -12,11 +16,13 @@ namespace R4ClothesAPI.Controllers
     {
         protected ISanPham _sanPhamSvc;
         protected IChiaSe _chiaSeSvc;
+        private readonly DataContext _context;
 
-        public SanphamsController(ISanPham sanPhamSvc, IChiaSe chiaSeSvc)
+        public SanphamsController(ISanPham sanPhamSvc, IChiaSe chiaSeSvc, DataContext context)
         {
             _sanPhamSvc = sanPhamSvc;
             _chiaSeSvc = chiaSeSvc;
+            _context = context;
         }
 
         /// <summary>
@@ -24,9 +30,11 @@ namespace R4ClothesAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("dssanpham")]
-        public List<SanPham> GetSanPhamAll()
+        public async Task<List<SanPham>> GetSanPhamAll([FromQuery] Pagination pagination)
         {
-            return _sanPhamSvc.DanhSachSanPham();
+            var queryable = _context.SanPhams.AsQueryable();
+            await HttpContext.InsertPaginationParameterInResponse(queryable, pagination.QuantityPerPage);
+            return await queryable.Paginate(pagination).ToListAsync();
         }
 
         /// <summary>
