@@ -253,6 +253,7 @@ namespace R4ClothesAPI.Controllers
         /// <param name="nguoiql"></param>
         /// <param name="tt"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost("hoadon/suahd")]
         public bool SuaHoaDon(int idhd, int nguoiql, TrangthaiHD tt)
         {
