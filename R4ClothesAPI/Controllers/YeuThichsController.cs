@@ -10,7 +10,7 @@ namespace R4ClothesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "User")]
+    //[Authorize(Roles = "User")]
     public class YeuThichsController : ControllerBase
     {
         private readonly IYeuThich _yeuThichSvc;

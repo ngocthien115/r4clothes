@@ -37,12 +37,13 @@ namespace R4Clothes.Shared.Services
             List<HoaDon> hd = null;
             if (from ==  null|| to == null)
             {
-                hd = _hoadonSvc.DanhSachHoaDon();
+                //hd = _hoadonSvc.DanhSachHoaDon();
+                hd = _context.HoaDons.Where(t => t.Trangthai == TrangthaiHD.Dagiao).ToList();
                 return hd;
             }
             else
             {
-                hd = await _context.HoaDons.Where(d => d.Ngaydat.Date >= from && d.Ngaydat.Date <= to).ToListAsync();
+                hd = await _context.HoaDons.Where(d => d.Ngaydat.Date >= from && d.Ngaydat.Date <= to && d.Trangthai == TrangthaiHD.Dagiao).ToListAsync();
                 return hd;
             }
         }
@@ -50,7 +51,7 @@ namespace R4Clothes.Shared.Services
         public List<KhachHangTT> KhachHangThanThiet()
         {
             List<KhachHangTT> ls = (from kh in _context.KhachHangs
-                              join dh in from dh in _context.HoaDons
+                              join dh in from dh in _context.HoaDons.Where(t => t.Trangthai == TrangthaiHD.Dagiao)
                                          group dh by dh.Makhachhang into g
                                          select new { CusID = g.Key, SoLuongDH = g.Count() }
                               on kh.Makhachhang equals dh.CusID
@@ -62,6 +63,8 @@ namespace R4Clothes.Shared.Services
         {
             var ls = (from ma in _context.SanPhams
                       join ts in from ct in _context.ChiTietHoaDons
+                                 join hd in _context.HoaDons.Where(t => t.Trangthai == TrangthaiHD.Dagiao)
+                                 on ct.Mahoadon equals hd.Mahoadon
                                  group ct by ct.Masanpham into g
                                  select new
                                  {
